@@ -141,7 +141,7 @@ export class ConfirmMnemonicComponent implements OnInit {
 
   private createWallet(wallet: WalletCreation) {
     this.apiService
-      .createStratisWallet(wallet)
+      .createXelsWallet(wallet)
       .subscribe(
         response => {
           if (response.status >= 200 && response.status < 400){

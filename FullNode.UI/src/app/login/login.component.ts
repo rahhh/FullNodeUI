@@ -113,8 +113,8 @@ export class LoginComponent implements OnInit {
   public onDecryptClicked() {
     this.isDecrypting = true;
     this.globalService.setWalletName(this.openWalletForm.get("selectWallet").value);
-    this.globalService.setCoinName("TestStratis");
-    this.globalService.setCoinUnit("TSTRAT");
+    this.globalService.setCoinName("TestXels");
+    this.globalService.setCoinUnit("TXELS");
     this.getCurrentNetwork();
     let walletLoad = new WalletLoad(
       this.openWalletForm.get("selectWallet").value,
@@ -124,7 +124,7 @@ export class LoginComponent implements OnInit {
   }
 
   private loadWallet(walletLoad: WalletLoad) {
-    this.apiService.loadStratisWallet(walletLoad)
+    this.apiService.loadXelsWallet(walletLoad)
       .subscribe(
         response => {
           if (response.status >= 200 && response.status < 400) {
@@ -157,12 +157,12 @@ export class LoginComponent implements OnInit {
           if (response.status >= 200 && response.status < 400) {
             let responseMessage = response.json();
             this.globalService.setNetwork(responseMessage.network);
-            if (responseMessage.network === "StratisMain") {
-              this.globalService.setCoinName("Stratis");
-              this.globalService.setCoinUnit("STRAT");
-            } else if (responseMessage.network === "StratisTest") {
-              this.globalService.setCoinName("TestStratis");
-              this.globalService.setCoinUnit("TSTRAT");
+            if (responseMessage.network === "XelsMain") {
+              this.globalService.setCoinName("Xels");
+              this.globalService.setCoinUnit("XELS");
+            } else if (responseMessage.network === "XelsTest") {
+              this.globalService.setCoinName("TestXels");
+              this.globalService.setCoinUnit("TXELS");
             }
           }
         },

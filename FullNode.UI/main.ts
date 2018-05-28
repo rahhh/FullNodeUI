@@ -42,7 +42,7 @@ function createWindow() {
     frame: true,
     minWidth: 1150,
     minHeight: 650,
-    title: "Stratis Core"
+    title: "Xels Core"
   });
 
   if (serve) {
@@ -80,10 +80,10 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
   if (serve) {
-    console.log("Stratis UI was started in development mode. This requires the user to be running the Stratis Full Node Daemon himself.")
+    console.log("Xels UI was started in development mode. This requires the user to be running the Xels Full Node Daemon himself.")
   }
   else {
-    startStratisApi();
+    startXelsApi();
   }
   createTray();
   createWindow();
@@ -93,7 +93,7 @@ app.on('ready', () => {
 });
 
 app.on('before-quit', () => {
-  closeStratisApi();
+  closeXelsApi();
 });
 
 // Quit when all windows are closed.
@@ -113,7 +113,7 @@ app.on('activate', () => {
   }
 });
 
-function closeStratisApi() {
+function closeXelsApi() {
   // if (process.platform !== 'darwin' && !serve) {
     if (process.platform !== 'darwin' && !serve && !testnet) {
     var http2 = require('http');
@@ -143,32 +143,32 @@ function closeStratisApi() {
    }
 };
 
-function startStratisApi() {
-  var stratisProcess;
-  const spawnStratis = require('child_process').spawn;
+function startXelsApi() {
+  var xelsProcess;
+  const spawnXels = require('child_process').spawn;
 
-  //Start Stratis Daemon
-  let apiPath = path.resolve(__dirname, 'assets//daemon//Stratis.StratisD');
+  //Start Xels Daemon
+  let apiPath = path.resolve(__dirname, 'assets//daemon//Xels.XelsD');
   if (os.platform() === 'win32') {
-    apiPath = path.resolve(__dirname, '..\\..\\resources\\daemon\\Stratis.StratisD.exe');
+    apiPath = path.resolve(__dirname, '..\\..\\resources\\daemon\\Xels.XelsD.exe');
   } else if(os.platform() === 'linux') {
-	  apiPath = path.resolve(__dirname, '..//..//resources//daemon//Stratis.StratisD');
+	  apiPath = path.resolve(__dirname, '..//..//resources//daemon//Xels.XelsD');
   } else {
-	  apiPath = path.resolve(__dirname, '..//..//resources//daemon//Stratis.StratisD');
+	  apiPath = path.resolve(__dirname, '..//..//resources//daemon//Xels.XelsD');
   }
 
   if (!testnet) {
-    stratisProcess = spawnStratis(apiPath, {
+    xelsProcess = spawnXels(apiPath, {
       detached: true
     });
   } else if (testnet) {
-    stratisProcess = spawnStratis(apiPath, ['-testnet'], {
+    xelsProcess = spawnXels(apiPath, ['-testnet'], {
       detached: true
     });
   }
 
-  stratisProcess.stdout.on('data', (data) => {
-    writeLog(`Stratis: ${data}`);
+  xelsProcess.stdout.on('data', (data) => {
+    writeLog(`Xels: ${data}`);
   });
 }
 
@@ -196,7 +196,7 @@ function createTray() {
       }
     }
   ]);
-  systemTray.setToolTip('Stratis Core');
+  systemTray.setToolTip('Xels Core');
   systemTray.setContextMenu(contextMenu);
   systemTray.on('click', function() {
     if (!mainWindow.isVisible()) {

@@ -1,17 +1,17 @@
 {
-  "name": "stratis-core",
-  "description": "Stratis Core Wallet",
+  "name": "xels-core",
+  "description": "Xels Core Wallet",
   "version": "0.2.0",
   "author": {
-    "name": "Stratis Group",
-    "email": "info@stratisplatform.com"
+    "name": "Xels Group",
+    "email": "info@xelsplatform.com"
   },
   "license": "MIT",
-  "homepage": "https://github.com/stratisproject/fullnodeui",
+  "homepage": "https://github.com/xelsproject/fullnodeui",
   "keywords": [
     "fullnode",
     "ui",
-    "stratis",
+    "xels",
     "core",
     "bitcoin",
     "angular",

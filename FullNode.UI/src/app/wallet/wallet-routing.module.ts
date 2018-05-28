@@ -15,7 +15,7 @@ const routes: Routes = [
       { path: 'history', component: HistoryComponent}
     ]
   },
-  { path: 'stratis-wallet', component: WalletComponent,
+  { path: 'xels-wallet', component: WalletComponent,
   children: [
     { path: '', redirectTo:'dashboard', pathMatch:'full' },
     { path: 'dashboard', component: DashboardComponent},

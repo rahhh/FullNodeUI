@@ -31,11 +31,11 @@ export class ApiService {
     private headers = new Headers({'Content-Type': 'application/json'});
     private pollingInterval = 3000;
     private apiPort;
-    private stratisApiUrl;
+    private xelsApiUrl;
 
     setApiPort() {
       this.apiPort = this.electronService.ipcRenderer.sendSync('get-port');
-      this.stratisApiUrl = 'http://localhost:' + this.apiPort + '/api';
+      this.xelsApiUrl = 'http://localhost:' + this.apiPort + '/api';
     }
 
     /**
@@ -43,7 +43,7 @@ export class ApiService {
      */
     getWalletFiles(): Observable<any> {
       return this.http
-        .get(this.stratisApiUrl + '/wallet/files')
+        .get(this.xelsApiUrl + '/wallet/files')
         .map((response: Response) => response);
      }
 
@@ -57,34 +57,34 @@ export class ApiService {
       params.set('wordCount', '12');
 
       return this.http
-        .get(this.stratisApiUrl + '/wallet/mnemonic', new RequestOptions({headers: this.headers, search: params}))
+        .get(this.xelsApiUrl + '/wallet/mnemonic', new RequestOptions({headers: this.headers, search: params}))
         .map((response: Response) => response);
     }
 
     /**
-     * Create a new Stratis wallet.
+     * Create a new Xels wallet.
      */
-    createStratisWallet(data: WalletCreation): Observable<any> {
+    createXelsWallet(data: WalletCreation): Observable<any> {
       return this.http
-        .post(this.stratisApiUrl + '/wallet/create/', JSON.stringify(data), {headers: this.headers})
+        .post(this.xelsApiUrl + '/wallet/create/', JSON.stringify(data), {headers: this.headers})
         .map((response: Response) => response);
     }
 
     /**
-     * Recover a Stratis wallet.
+     * Recover a Xels wallet.
      */
-    recoverStratisWallet(data: WalletRecovery): Observable<any> {
+    recoverXelsWallet(data: WalletRecovery): Observable<any> {
       return this.http
-        .post(this.stratisApiUrl + '/wallet/recover/', JSON.stringify(data), {headers: this.headers})
+        .post(this.xelsApiUrl + '/wallet/recover/', JSON.stringify(data), {headers: this.headers})
         .map((response: Response) => response);
     }
 
     /**
-     * Load a Stratis wallet
+     * Load a Xels wallet
      */
-    loadStratisWallet(data: WalletLoad): Observable<any> {
+    loadXelsWallet(data: WalletLoad): Observable<any> {
       return this.http
-        .post(this.stratisApiUrl + '/wallet/load/', JSON.stringify(data), {headers: this.headers})
+        .post(this.xelsApiUrl + '/wallet/load/', JSON.stringify(data), {headers: this.headers})
         .map((response: Response) => response);
     }
 
@@ -93,7 +93,7 @@ export class ApiService {
      */
     getWalletStatus(): Observable<any> {
       return this.http
-        .get(this.stratisApiUrl + '/wallet/status')
+        .get(this.xelsApiUrl + '/wallet/status')
         .map((response: Response) => response);
     }
 
@@ -105,7 +105,7 @@ export class ApiService {
       params.set('Name', data.walletName);
 
       return this.http
-        .get(this.stratisApiUrl + '/wallet/general-info', new RequestOptions({headers: this.headers, search: params}))
+        .get(this.xelsApiUrl + '/wallet/general-info', new RequestOptions({headers: this.headers, search: params}))
         .map((response: Response) => response);
     }
 
@@ -119,7 +119,7 @@ export class ApiService {
       return Observable
         .interval(this.pollingInterval)
         .startWith(0)
-        .switchMap(() => this.http.get(this.stratisApiUrl + '/wallet/general-info', new RequestOptions({headers: this.headers, search: params})))
+        .switchMap(() => this.http.get(this.xelsApiUrl + '/wallet/general-info', new RequestOptions({headers: this.headers, search: params})))
         .map((response: Response) => response);
     }
 
@@ -134,7 +134,7 @@ export class ApiService {
       return Observable
         .interval(this.pollingInterval)
         .startWith(0)
-        .switchMap(() => this.http.get(this.stratisApiUrl + '/wallet/balance', new RequestOptions({headers: this.headers, search: params})))
+        .switchMap(() => this.http.get(this.xelsApiUrl + '/wallet/balance', new RequestOptions({headers: this.headers, search: params})))
         .map((response: Response) => response);
     }
 
@@ -149,7 +149,7 @@ export class ApiService {
       params.set('allowUnconfirmed', "true");
 
       return this.http
-        .get(this.stratisApiUrl + '/wallet/maxbalance', new RequestOptions({headers: this.headers, search: params}))
+        .get(this.xelsApiUrl + '/wallet/maxbalance', new RequestOptions({headers: this.headers, search: params}))
         .map((response: Response) => response);
     }
 
@@ -164,7 +164,7 @@ export class ApiService {
       return Observable
         .interval(this.pollingInterval)
         .startWith(0)
-        .switchMap(() => this.http.get(this.stratisApiUrl + '/wallet/history', new RequestOptions({headers: this.headers, search: params})))
+        .switchMap(() => this.http.get(this.xelsApiUrl + '/wallet/history', new RequestOptions({headers: this.headers, search: params})))
         .map((response: Response) => response);
     }
 
@@ -177,7 +177,7 @@ export class ApiService {
       params.set('accountName', "account 0"); //temporary
 
       return this.http
-        .get(this.stratisApiUrl + '/wallet/unusedaddress', new RequestOptions({headers: this.headers, search: params}))
+        .get(this.xelsApiUrl + '/wallet/unusedaddress', new RequestOptions({headers: this.headers, search: params}))
         .map((response: Response) => response);
     }
 
@@ -191,7 +191,7 @@ export class ApiService {
       params.set('count', count);
 
       return this.http
-        .get(this.stratisApiUrl + '/wallet/unusedaddresses', new RequestOptions({headers: this.headers, search: params}))
+        .get(this.xelsApiUrl + '/wallet/unusedaddresses', new RequestOptions({headers: this.headers, search: params}))
         .map((response: Response) => response);
     }
 
@@ -204,7 +204,7 @@ export class ApiService {
       params.set('accountName', "account 0"); //temporary
 
       return this.http
-        .get(this.stratisApiUrl + '/wallet/addresses', new RequestOptions({headers: this.headers, search: params}))
+        .get(this.xelsApiUrl + '/wallet/addresses', new RequestOptions({headers: this.headers, search: params}))
         .map((response: Response) => response);
     }
 
@@ -221,7 +221,7 @@ export class ApiService {
       params.set('allowUnconfirmed', "true");
 
       return this.http
-        .get(this.stratisApiUrl + '/wallet/estimate-txfee', new RequestOptions({headers: this.headers, search: params}))
+        .get(this.xelsApiUrl + '/wallet/estimate-txfee', new RequestOptions({headers: this.headers, search: params}))
         .map((response: Response) => response);
     }
 
@@ -230,7 +230,7 @@ export class ApiService {
      */
     buildTransaction(data: TransactionBuilding): Observable<any> {
       return this.http
-        .post(this.stratisApiUrl + '/wallet/build-transaction', JSON.stringify(data), {headers: this.headers})
+        .post(this.xelsApiUrl + '/wallet/build-transaction', JSON.stringify(data), {headers: this.headers})
         .map((response: Response) => response);
     }
 
@@ -239,7 +239,7 @@ export class ApiService {
      */
     sendTransaction(data: TransactionSending): Observable<any> {
       return this.http
-        .post(this.stratisApiUrl + '/wallet/send-transaction', JSON.stringify(data), {headers: this.headers})
+        .post(this.xelsApiUrl + '/wallet/send-transaction', JSON.stringify(data), {headers: this.headers})
         .map((response: Response) => response);
     }
 
@@ -248,7 +248,7 @@ export class ApiService {
      */
     startStaking(data: any): Observable<any> {
       return this.http
-        .post(this.stratisApiUrl + '/miner/startstaking', JSON.stringify(data), {headers: this.headers})
+        .post(this.xelsApiUrl + '/miner/startstaking', JSON.stringify(data), {headers: this.headers})
         .map((response: Response) => response);
     }
 
@@ -259,7 +259,7 @@ export class ApiService {
       return Observable
         .interval(this.pollingInterval)
         .startWith(0)
-        .switchMap(() => this.http.get(this.stratisApiUrl + '/miner/getstakinginfo'))
+        .switchMap(() => this.http.get(this.xelsApiUrl + '/miner/getstakinginfo'))
         .map((response: Response) => response);
     }
 
@@ -268,7 +268,7 @@ export class ApiService {
       */
     stopStaking(): Observable<any> {
       return this.http
-        .post(this.stratisApiUrl + '/miner/stopstaking', {headers: this.headers})
+        .post(this.xelsApiUrl + '/miner/stopstaking', {headers: this.headers})
         .map((response: Response) => response);
     }
 
@@ -277,7 +277,7 @@ export class ApiService {
      */
     shutdownNode(): Observable<any> {
       return this.http
-        .post(this.stratisApiUrl + '/node/shutdown', {headers: this.headers})
+        .post(this.xelsApiUrl + '/node/shutdown', {headers: this.headers})
         .map((response: Response) => response);
     }
 }

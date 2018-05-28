@@ -115,7 +115,7 @@ export class RecoverComponent implements OnInit {
 
   private recoverWallet(recoverWallet: WalletRecovery) {
     this.apiService
-      .recoverStratisWallet(recoverWallet)
+      .recoverXelsWallet(recoverWallet)
       .subscribe(
         response => {
           if (response.status >= 200 && response.status < 400) {

@@ -1,6 +1,6 @@
 {
-  "appId": "com.stratisplatform.core",
-  "productName": "Stratis Core",
+  "appId": "com.xelsplatform.core",
+  "productName": "Xels Core",
   "publish": null,
   "directories": {
     "output": "app-builds"
@@ -18,7 +18,7 @@
       "deb",
       "tar.gz"
     ],
-    "synopsis": "FullNode.UI: Stratis' staking wallet.",
+    "synopsis": "FullNode.UI: Xels' staking wallet.",
     "category": "Utility",
     "artifactName": "${productName}-v${version}-${os}-${arch}.${ext}"
   },
