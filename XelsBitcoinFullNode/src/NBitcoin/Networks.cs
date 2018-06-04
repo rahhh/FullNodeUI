@@ -376,10 +376,7 @@ namespace NBitcoin
 
                 .AddDNSSeeds(new[]
                 {
-                    new DNSSeedData("seednode1.xelsplatform.com", "seednode1.xelsplatform.com"),
-                    new DNSSeedData("seednode2.xels.cloud", "seednode2.xels.cloud"),
-                    new DNSSeedData("seednode3.xelsplatform.com", "seednode3.xelsplatform.com"),
-                    new DNSSeedData("seednode4.xels.cloud", "seednode4.xels.cloud")
+                    new DNSSeedData("", "")
                 })
 
                 .SetBase58Bytes(Base58Type.PUBKEY_ADDRESS, new byte[] {(63)})
@@ -397,7 +394,7 @@ namespace NBitcoin
                 .SetBech32(Bech32Type.WITNESS_PUBKEY_ADDRESS, "bc")
                 .SetBech32(Bech32Type.WITNESS_SCRIPT_ADDRESS, "bc");
 
-            var seed = new[] { "101.200.198.155", "103.24.76.21", "104.172.24.79" };
+            var seed = new[] { "" };
             var fixedSeeds = new List<NetworkAddress>();
             // Convert the pnSeeds array into usable address objects.
             Random rand = new Random();
@@ -577,12 +574,19 @@ namespace NBitcoin
 
         private static Block CreateXelsGenesisBlock(uint nTime, uint nNonce, uint nBits, int nVersion, Money genesisReward)
         {
-            string pszTimestamp = "http://www.theonion.com/article/olympics-head-priestess-slits-throat-official-rio--53466";
+            string pszTimestamp = "https://theinventory.com/master-dynamic-mw60-finally-make-a-connection-with-b-1794180112#[ks|curation";
             return CreateXelsGenesisBlock(pszTimestamp, nTime, nNonce, nBits, nVersion, genesisReward);
         }
 
         private static Block CreateXelsGenesisBlock(string pszTimestamp, uint nTime, uint nNonce, uint nBits, int nVersion, Money genesisReward)
         {
+            //var publicKeyHash = new KeyId("ShP8gxfspZUAxuPXdR4XcgCrpbdhjXQs3S");
+            //BitcoinAddress mainNetAddress = publicKeyHash.GetAddress(Network.Main);
+            ////Console.WriteLine(mainNetAddress.ScriptPubKey);
+
+            //Script genesisOutputScript = new Script(Op.GetPushOp(Encoders.Hex.DecodeData("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f")), OpcodeType.OP_CHECKSIG);
+
+
             Transaction txNew = new Transaction();
             txNew.Version = 1;
             txNew.Time = nTime;
@@ -598,12 +602,44 @@ namespace NBitcoin
             {
                 Value = genesisReward,
             });
+
+            //Transaction txNew2 = new Transaction();
+            //txNew2.Version = 1;
+            //txNew2.Time = nTime;
+            //txNew2.AddInput(new TxIn()
+            //{
+            //    ScriptSig = new Script(Op.GetPushOp(1), new Op()
+            //    {
+            //        Code = (OpcodeType)0x1,
+            //        PushData = new[] { (byte)42 }
+            //    }, Op.GetPushOp(Encoders.ASCII.DecodeData(pszTimestamp)))
+            //});
+            //var dest = BitcoinAddress.Create("Scn853nFpivwm5ULLK6Z9t3fswmfq5ZB1x", Network.XelsMain);
+            //txNew2.AddOutput(new TxOut()
+            //{
+            //    ScriptPubKey = dest.ScriptPubKey,
+            //    Value = Money.Coins(5000m),
+            //});
+
+            //Transaction tx = new Transaction();
+            //var input = new TxIn();
+            //input.PrevOut = new OutPoint(new uint256(RandomUtils.GetBytes(32)), 0);
+            //tx.AddInput(input);
+
+            //TxOut output = new TxOut();
+            //var dest = BitcoinAddress.Create("Scn853nFpivwm5ULLK6Z9t3fswmfq5ZB1x");
+            //output.Value = Money.Coins(5000m);
+
+            //tx.AddOutput(output);
+
             Block genesis = new Block();
             genesis.Header.BlockTime = Utils.UnixTimeToDateTime(nTime);
             genesis.Header.Bits = nBits;
             genesis.Header.Nonce = nNonce;
             genesis.Header.Version = nVersion;
             genesis.Transactions.Add(txNew);
+            //genesis.Transactions.Add(txNew2);
+            //genesis.Transactions.Add(tx);
             genesis.Header.HashPrevBlock = uint256.Zero;
             genesis.UpdateMerkleRoot();
             return genesis;
