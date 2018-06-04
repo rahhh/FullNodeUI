@@ -248,7 +248,7 @@ namespace NBitcoin
                 RootFolderName = BitcoinRootFolderName,
                 DefaultConfigFilename = BitcoinDefaultConfigFilename
             };
-            
+
             network.consensus.SubsidyHalvingInterval = 150;
             network.consensus.MajorityEnforceBlockUpgrade = 750;
             network.consensus.MajorityRejectBlockOutdated = 950;
@@ -314,9 +314,9 @@ namespace NBitcoin
             var consensus = new Consensus();
 
             consensus.NetworkOptions = new NetworkOptions() { IsProofOfStake = true };
-            consensus.GetPoWHash = (n, h) => Crypto.HashX13.Instance.Hash(h.ToBytes(options:n)); 
+            consensus.GetPoWHash = (n, h) => Crypto.HashX13.Instance.Hash(h.ToBytes(options: n));
 
-            consensus.SubsidyHalvingInterval = 210000;
+            consensus.SubsidyHalvingInterval = 1014286;
             consensus.MajorityEnforceBlockUpgrade = 750;
             consensus.MajorityRejectBlockOutdated = 950;
             consensus.MajorityWindow = 1000;
@@ -326,7 +326,7 @@ namespace NBitcoin
             consensus.BIP34Hash = new uint256("0x000000000000024b89b42a942fe0d9fea3bb44ab7bd1b19115dd6a759c0808b8");
             consensus.PowLimit = new Target(new uint256("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"));
             consensus.PowTargetTimespan = TimeSpan.FromSeconds(14 * 24 * 60 * 60); // two weeks
-            consensus.PowTargetSpacing = TimeSpan.FromSeconds(10 * 60);
+            consensus.PowTargetSpacing = TimeSpan.FromSeconds(2.5 * 60);
             consensus.PowAllowMinDifficultyBlocks = false;
             consensus.PowNoRetargeting = false;
             consensus.RuleChangeActivationThreshold = 1916; // 95% of 2016
@@ -338,7 +338,7 @@ namespace NBitcoin
 
             consensus.LastPOWBlock = 12500;
 
-            consensus.ProofOfStakeLimit =   new BigInteger(uint256.Parse("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff").ToBytes(false));
+            consensus.ProofOfStakeLimit = new BigInteger(uint256.Parse("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff").ToBytes(false));
             consensus.ProofOfStakeLimitV2 = new BigInteger(uint256.Parse("000000000000ffffffffffffffffffffffffffffffffffffffffffffffffffff").ToBytes(false));
 
             consensus.CoinType = 105;
@@ -358,8 +358,8 @@ namespace NBitcoin
             messageStart[3] = 0x05;
             var magic = BitConverter.ToUInt32(messageStart, 0); //0x5223570; 
 
-            Assert(consensus.HashGenesisBlock == uint256.Parse("0x0000066e91e46e5a264d42c89e1204963b2ee6be230b443e9159020539d972af"));
-            Assert(genesis.Header.HashMerkleRoot == uint256.Parse("0x65a26bc20b0351aebf05829daefa8f7db2f800623439f3c114257c91447f1518"));
+            //Assert(consensus.HashGenesisBlock == uint256.Parse("0x0000066e91e46e5a264d42c89e1204963b2ee6be230b443e9159020539d972af"));
+            //Assert(genesis.Header.HashMerkleRoot == uint256.Parse("0x65a26bc20b0351aebf05829daefa8f7db2f800623439f3c114257c91447f1518"));
 
             var builder = new NetworkBuilder()
                 .SetName("XelsMain")
@@ -368,8 +368,8 @@ namespace NBitcoin
                 .SetConsensus(consensus)
                 .SetMagic(magic)
                 .SetGenesis(genesis)
-                .SetPort(16178)
-                .SetRPCPort(16174)
+                .SetPort(19776)
+                .SetRPCPort(19775)
                 .SetTxFees(10000, 60000, 10000)
                 .SetMaxTimeOffsetSeconds(XelsMaxTimeOffsetSeconds)
                 .SetMaxTipAge(XelsDefaultMaxTipAgeInSeconds)
@@ -379,20 +379,20 @@ namespace NBitcoin
                     new DNSSeedData("", "")
                 })
 
-                .SetBase58Bytes(Base58Type.PUBKEY_ADDRESS, new byte[] {(63)})
-                .SetBase58Bytes(Base58Type.SCRIPT_ADDRESS, new byte[] {(125)})
-                .SetBase58Bytes(Base58Type.SECRET_KEY, new byte[] {(63 + 128)})
-                .SetBase58Bytes(Base58Type.ENCRYPTED_SECRET_KEY_NO_EC, new byte[] {0x01, 0x42})
-                .SetBase58Bytes(Base58Type.ENCRYPTED_SECRET_KEY_EC, new byte[] {0x01, 0x43})
-                .SetBase58Bytes(Base58Type.EXT_PUBLIC_KEY, new byte[] {(0x04), (0x88), (0xB2), (0x1E)})
-                .SetBase58Bytes(Base58Type.EXT_SECRET_KEY, new byte[] {(0x04), (0x88), (0xAD), (0xE4)})
-                .SetBase58Bytes(Base58Type.PASSPHRASE_CODE, new byte[] {0x2C, 0xE9, 0xB3, 0xE1, 0xFF, 0x39, 0xE2})
-                .SetBase58Bytes(Base58Type.CONFIRMATION_CODE, new byte[] {0x64, 0x3B, 0xF6, 0xA8, 0x9A})
-                .SetBase58Bytes(Base58Type.STEALTH_ADDRESS, new byte[] {0x2a})
-                .SetBase58Bytes(Base58Type.ASSET_ID, new byte[] {23})
-                .SetBase58Bytes(Base58Type.COLORED_ADDRESS, new byte[] {0x13})
-                .SetBech32(Bech32Type.WITNESS_PUBKEY_ADDRESS, "bc")
-                .SetBech32(Bech32Type.WITNESS_SCRIPT_ADDRESS, "bc");
+                .SetBase58Bytes(Base58Type.PUBKEY_ADDRESS, new byte[] { (75) })  // 75 for capital X
+                .SetBase58Bytes(Base58Type.SCRIPT_ADDRESS, new byte[] { (137) }) // 137 for small x
+                .SetBase58Bytes(Base58Type.SECRET_KEY, new byte[] { (63 + 128) })
+                .SetBase58Bytes(Base58Type.ENCRYPTED_SECRET_KEY_NO_EC, new byte[] { 0x01, 0x42 })
+                .SetBase58Bytes(Base58Type.ENCRYPTED_SECRET_KEY_EC, new byte[] { 0x01, 0x43 })
+                .SetBase58Bytes(Base58Type.EXT_PUBLIC_KEY, new byte[] { (0x04), (0x88), (0xB2), (0x1E) })
+                .SetBase58Bytes(Base58Type.EXT_SECRET_KEY, new byte[] { (0x04), (0x88), (0xAD), (0xE4) })
+                .SetBase58Bytes(Base58Type.PASSPHRASE_CODE, new byte[] { 0x2C, 0xE9, 0xB3, 0xE1, 0xFF, 0x39, 0xE2 })
+                .SetBase58Bytes(Base58Type.CONFIRMATION_CODE, new byte[] { 0x64, 0x3B, 0xF6, 0xA8, 0x9A })
+                .SetBase58Bytes(Base58Type.STEALTH_ADDRESS, new byte[] { 0x2a })
+                .SetBase58Bytes(Base58Type.ASSET_ID, new byte[] { 23 })
+                .SetBase58Bytes(Base58Type.COLORED_ADDRESS, new byte[] { 0x13 })
+                .SetBech32(Bech32Type.WITNESS_PUBKEY_ADDRESS, "xc")
+                .SetBech32(Bech32Type.WITNESS_SCRIPT_ADDRESS, "xc");
 
             var seed = new[] { "" };
             var fixedSeeds = new List<NetworkAddress>();
@@ -450,8 +450,8 @@ namespace NBitcoin
                 .SetConsensus(consensus)
                 .SetMagic(magic)
                 .SetGenesis(genesis)
-                .SetPort(26178)
-                .SetRPCPort(26174)
+                .SetPort(29776)
+                .SetRPCPort(29775)
                 .SetMaxTimeOffsetSeconds(XelsMaxTimeOffsetSeconds)
                 .SetMaxTipAge(XelsDefaultMaxTipAgeInSeconds)
                 .SetTxFees(10000, 60000, 10000)
@@ -477,7 +477,7 @@ namespace NBitcoin
                 new NetworkAddress(IPAddress.Parse("13.70.81.5"), 3389), // beard cloud node  
                 new NetworkAddress(IPAddress.Parse("191.235.85.131"), 3389), // fassa cloud node  
                 new NetworkAddress(IPAddress.Parse("52.232.58.52"), 26178), // neurosploit public node
-            }); 
+            });
 
             return builder.BuildAndRegister();
         }
@@ -503,7 +503,7 @@ namespace NBitcoin
             messageStart[1] = 0xf2;
             messageStart[2] = 0xc0;
             messageStart[3] = 0xef;
-            var magic = BitConverter.ToUInt32(messageStart, 0); 
+            var magic = BitConverter.ToUInt32(messageStart, 0);
 
             var genesis = Network.XelsMain.GetGenesis();
             genesis.Header.Time = 1494909211;
@@ -522,8 +522,8 @@ namespace NBitcoin
                 .SetConsensus(consensus)
                 .SetMagic(magic)
                 .SetGenesis(genesis)
-                .SetPort(18444)
-                .SetRPCPort(18442)
+                .SetPort(39776)
+                .SetRPCPort(39775)
                 .SetMaxTimeOffsetSeconds(XelsMaxTimeOffsetSeconds)
                 .SetMaxTipAge(XelsDefaultMaxTipAgeInSeconds)
                 .SetBase58Bytes(Base58Type.PUBKEY_ADDRESS, new byte[] { (65) })

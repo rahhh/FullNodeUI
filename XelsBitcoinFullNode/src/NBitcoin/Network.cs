@@ -763,14 +763,14 @@ namespace NBitcoin
 
         public Money GetReward(int nHeight)
         {
-            long nSubsidy = new Money(50 * Money.COIN);
+            long nSubsidy = new Money(375 * Money.COIN);
             int halvings = nHeight / this.consensus.SubsidyHalvingInterval;
 
             // Force block reward to zero when right shift is undefined.
-            if (halvings >= 64)
+            if (halvings >= 3)
                 return Money.Zero;
 
-            // Subsidy is cut in half every 210,000 blocks which will occur approximately every 4 years.
+            // Subsidy is cut in half every 1014286 blocks which will occur approximately every 4 years.
             nSubsidy >>= halvings;
 
             return new Money(nSubsidy);
