@@ -770,7 +770,7 @@ namespace NBitcoin
             if (halvings >= 3)
                 return Money.Zero;
 
-            // Subsidy is cut in half every 1014286 blocks which will occur approximately every 4 years.
+            // Subsidy is cut in half every 1014286 blocks which will occur approximately every 4.82 years.
             nSubsidy >>= halvings;
 
             return new Money(nSubsidy);
