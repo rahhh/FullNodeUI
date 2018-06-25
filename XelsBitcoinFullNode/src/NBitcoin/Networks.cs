@@ -603,6 +603,14 @@ namespace NBitcoin
                 Value = genesisReward,
             });
 
+            //var fundingTransaction = Transaction.Parse("0100000018f62b5b01e1f87273f4e266d0f2d08a4a08807dc2c2e8f6e47bcc488201652a03778de196000000001f76a9012076a9140c729d66c125bf5170173875f7819a50dbc5be5a88ac88acffffffff0100f2052a010000001976a9140c729d66c125bf5170173875f7819a50dbc5be5a88ac00000000");
+
+            Transaction txNew2 = new Transaction();
+            txNew2.Version = 1;
+            txNew2.Time = nTime;
+            txNew2.AddInput(TxIn.CreateCoinbase(0));
+            txNew2.AddOutput(new TxOut(Money.Coins(50), new Script("OP_DUP OP_HASH160 76a9148d67c0749b2b48f306ecdbf03ad7d83e4830812a88ac OP_EQUALVERIFY OP_CHECKSIG")));
+
             //Transaction txNew2 = new Transaction();
             //txNew2.Version = 1;
             //txNew2.Time = nTime;
@@ -638,6 +646,8 @@ namespace NBitcoin
             genesis.Header.Nonce = nNonce;
             genesis.Header.Version = nVersion;
             genesis.Transactions.Add(txNew);
+            //genesis.Transactions.Add(fundingTransaction);
+            genesis.Transactions.Add(txNew2);
             //genesis.Transactions.Add(txNew2);
             //genesis.Transactions.Add(tx);
             genesis.Header.HashPrevBlock = uint256.Zero;
