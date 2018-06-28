@@ -311,16 +311,16 @@ namespace Xels.Bitcoin.Features.Consensus
             if (transaction.IsCoinBase)
                 return signatureOperationCost;
 
-            if (flags.ScriptFlags.HasFlag(ScriptVerify.P2SH))
-            {
-                signatureOperationCost += this.GetP2SHSignatureOperationsCount(transaction, inputs) * this.ConsensusOptions.WitnessScaleFactor;
-            }
+            //if (flags.ScriptFlags.HasFlag(ScriptVerify.P2SH))
+            //{
+            //    signatureOperationCost += this.GetP2SHSignatureOperationsCount(transaction, inputs) * this.ConsensusOptions.WitnessScaleFactor;
+            //}
 
-            for (int i = 0; i < transaction.Inputs.Count; i++)
-            {
-                TxOut prevout = inputs.GetOutputFor(transaction.Inputs[i]);
-                signatureOperationCost += this.CountWitnessSignatureOperation(transaction.Inputs[i].ScriptSig, prevout.ScriptPubKey, transaction.Inputs[i].WitScript, flags);
-            }
+            //for (int i = 0; i < transaction.Inputs.Count; i++)
+            //{
+            //    TxOut prevout = inputs.GetOutputFor(transaction.Inputs[i]);
+            //    signatureOperationCost += this.CountWitnessSignatureOperation(transaction.Inputs[i].ScriptSig, prevout.ScriptPubKey, transaction.Inputs[i].WitScript, flags);
+            //}
 
             return signatureOperationCost;
         }

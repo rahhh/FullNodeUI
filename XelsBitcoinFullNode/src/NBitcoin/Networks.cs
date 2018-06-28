@@ -345,7 +345,7 @@ namespace NBitcoin
 
             consensus.DefaultAssumeValid = new uint256("0x8c2cf95f9ca72e13c8c4cdf15c2d7cc49993946fb49be4be147e106d502f1869"); // 642930
 
-            Block genesis = CreateXelsGenesisBlock(1470467000, 1831645, 0x1e0fffff, 1, Money.Zero);
+            Block genesis = CreateXelsGenesisBlock(1529946948, 1831645, 0x1e0fffff, 1, Money.Zero);
             consensus.HashGenesisBlock = genesis.GetHash(consensus.NetworkOptions);
 
             // The message start string is designed to be unlikely to occur in normal data.
@@ -587,21 +587,21 @@ namespace NBitcoin
             //Script genesisOutputScript = new Script(Op.GetPushOp(Encoders.Hex.DecodeData("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f")), OpcodeType.OP_CHECKSIG);
 
 
-            Transaction txNew = new Transaction();
-            txNew.Version = 1;
-            txNew.Time = nTime;
-            txNew.AddInput(new TxIn()
-            {
-                ScriptSig = new Script(Op.GetPushOp(0), new Op()
-                {
-                    Code = (OpcodeType)0x1,
-                    PushData = new[] { (byte)42 }
-                }, Op.GetPushOp(Encoders.ASCII.DecodeData(pszTimestamp)))
-            });
-            txNew.AddOutput(new TxOut()
-            {
-                Value = genesisReward,
-            });
+            //Transaction txNew = new Transaction();
+            //txNew.Version = 1;
+            //txNew.Time = nTime;
+            //txNew.AddInput(new TxIn()
+            //{
+            //    ScriptSig = new Script(Op.GetPushOp(0), new Op()
+            //    {
+            //        Code = (OpcodeType)0x1,
+            //        PushData = new[] { (byte)42 }
+            //    }, Op.GetPushOp(Encoders.ASCII.DecodeData(pszTimestamp)))
+            //});
+            //txNew.AddOutput(new TxOut()
+            //{
+            //    Value = genesisReward,
+            //});
 
             //var fundingTransaction = Transaction.Parse("0100000018f62b5b01e1f87273f4e266d0f2d08a4a08807dc2c2e8f6e47bcc488201652a03778de196000000001f76a9012076a9140c729d66c125bf5170173875f7819a50dbc5be5a88ac88acffffffff0100f2052a010000001976a9140c729d66c125bf5170173875f7819a50dbc5be5a88ac00000000");
 
@@ -609,7 +609,14 @@ namespace NBitcoin
             txNew2.Version = 1;
             txNew2.Time = nTime;
             txNew2.AddInput(TxIn.CreateCoinbase(0));
-            txNew2.AddOutput(new TxOut(Money.Coins(50), new Script("OP_DUP OP_HASH160 76a9148d67c0749b2b48f306ecdbf03ad7d83e4830812a88ac OP_EQUALVERIFY OP_CHECKSIG")));
+            txNew2.AddOutput(new TxOut(Money.Coins(500000), new Script("OP_DUP OP_HASH160 76a9142050a45fae622ca00596e6742b9e9f8fd51a583388ac OP_EQUALVERIFY OP_CHECKSIG")));
+
+            //Transaction txNew3 = new Transaction();
+            //txNew3.Version = 1;
+            //txNew3.Time = nTime;
+            //txNew3.AddInput(TxIn.CreateCoinbase(0));
+            //txNew3.AddOutput(new TxOut(Money.Coins(5000), new Script("OP_DUP OP_HASH160 76a914e7b78f7b538b58bf4d3dab7d161f138e10a3e3c988ac OP_EQUALVERIFY OP_CHECKSIG")));
+
 
             //Transaction txNew2 = new Transaction();
             //txNew2.Version = 1;
@@ -645,9 +652,10 @@ namespace NBitcoin
             genesis.Header.Bits = nBits;
             genesis.Header.Nonce = nNonce;
             genesis.Header.Version = nVersion;
-            genesis.Transactions.Add(txNew);
+            //genesis.Transactions.Add(txNew);
             //genesis.Transactions.Add(fundingTransaction);
             genesis.Transactions.Add(txNew2);
+            //genesis.Transactions.Add(txNew3);
             //genesis.Transactions.Add(txNew2);
             //genesis.Transactions.Add(tx);
             genesis.Header.HashPrevBlock = uint256.Zero;

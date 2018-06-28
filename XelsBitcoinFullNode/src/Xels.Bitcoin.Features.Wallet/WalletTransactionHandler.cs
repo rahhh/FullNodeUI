@@ -343,7 +343,7 @@ namespace Xels.Bitcoin.Features.Wallet
             }
 
             context.TransactionBuilder.SendFees(fee);
-            context.TransactionFee = fee;
+            context.TransactionFee = Money.Satoshis(2290000);//fee;
         }
     }
 

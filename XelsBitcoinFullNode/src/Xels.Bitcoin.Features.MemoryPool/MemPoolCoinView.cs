@@ -127,22 +127,23 @@ namespace Xels.Bitcoin.Features.MemoryPool
         /// <returns>Tuple of priority value and sum of all txin values that are already in blockchain.</returns>
         public (double priority, Money inChainInputValue) GetPriority(Transaction tx, int nHeight)
         {
-            Money inChainInputValue = 0;
-            if (tx.IsCoinBase)
-                return (0.0, inChainInputValue);
-            double dResult = 0.0;
-            foreach (TxIn txInput in tx.Inputs)
-            {
-                UnspentOutputs coins = this.Set.AccessCoins(txInput.PrevOut.Hash);
-                Guard.Assert(coins != null);
-                if (!coins.IsAvailable(txInput.PrevOut.N)) continue;
-                if (coins.Height <= nHeight)
-                {
-                    dResult += (double)coins.Outputs[txInput.PrevOut.N].Value.Satoshi * (nHeight - coins.Height);
-                    inChainInputValue += coins.Outputs[txInput.PrevOut.N].Value;
-                }
-            }
-            return (this.ComputePriority(tx, dResult), inChainInputValue);
+            return (0.0, 0);
+            //Money inChainInputValue = 0;
+            //if (tx.IsCoinBase)
+            //    return (0.0, inChainInputValue);
+            //double dResult = 0.0;
+            //foreach (TxIn txInput in tx.Inputs)
+            //{
+            //    UnspentOutputs coins = this.Set.AccessCoins(txInput.PrevOut.Hash);
+            //    Guard.Assert(coins != null);
+            //    if (!coins.IsAvailable(txInput.PrevOut.N)) continue;
+            //    if (coins.Height <= nHeight)
+            //    {
+            //        dResult += (double)coins.Outputs[txInput.PrevOut.N].Value.Satoshi * (nHeight - coins.Height);
+            //        inChainInputValue += coins.Outputs[txInput.PrevOut.N].Value;
+            //    }
+            //}
+            //return (this.ComputePriority(tx, dResult), inChainInputValue);
         }
 
         /// <summary>
@@ -167,14 +168,15 @@ namespace Xels.Bitcoin.Features.MemoryPool
         /// <returns>Whether the transactions spends coin base.</returns>
         public bool SpendsCoinBase(Transaction tx)
         {
-            foreach (TxIn txInput in tx.Inputs)
-            {
-                UnspentOutputs coins = this.Set.AccessCoins(txInput.PrevOut.Hash);
-                if (coins.IsCoinbase)
-                    return true;
-            }
+            return true;
+            //foreach (TxIn txInput in tx.Inputs)
+            //{
+            //    UnspentOutputs coins = this.Set.AccessCoins(txInput.PrevOut.Hash);
+            //    if (coins.IsCoinbase)
+            //        return true;
+            //}
 
-            return false;
+            //return false;
         }
 
         /// <summary>
