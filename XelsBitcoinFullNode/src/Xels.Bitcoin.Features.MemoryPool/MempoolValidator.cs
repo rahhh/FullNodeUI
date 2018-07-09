@@ -438,7 +438,7 @@ namespace Xels.Bitcoin.Features.MemoryPool
 
                 this.CreateMempoolEntry(context, state.AcceptTime);
                 this.CheckSigOps(context);
-                this.CheckFee(context);
+                //this.CheckFee(context);
 
                 this.CheckRateLimit(context, state.LimitFree);
 
@@ -725,11 +725,11 @@ namespace Xels.Bitcoin.Features.MemoryPool
         /// <param name="acceptTime">The accept time to use for the entry.</param>
         private void CreateMempoolEntry(MempoolValidationContext context, long acceptTime)
         {
-            // Only accept BIP68 sequence locked transactions that can be mined in the next
-            // block; we don't want our mempool filled up with transactions that can't
-            // be mined yet.
-            // Must keep pool.cs for this unless we change CheckSequenceLocks to take a
-            // CoinsViewCache instead of create its own
+            //// Only accept BIP68 sequence locked transactions that can be mined in the next
+            //// block; we don't want our mempool filled up with transactions that can't
+            //// be mined yet.
+            //// Must keep pool.cs for this unless we change CheckSequenceLocks to take a
+            //// CoinsViewCache instead of create its own
             //if (!CheckSequenceLocks(this.chain.Tip, context, PowConsensusValidator.StandardLocktimeVerifyFlags, context.LockPoints))
             //    context.State.Fail(MempoolErrors.NonBIP68Final).Throw();
 
@@ -747,8 +747,16 @@ namespace Xels.Bitcoin.Features.MemoryPool
             //Money nValueIn = context.View.GetValueIn(context.Transaction);
 
             context.ValueOut = context.Transaction.TotalOut;
-            context.Fees = Money.Coins(50);//nValueIn - context.ValueOut;
-            Money nValueIn = context.ValueOut - context.Fees;
+            Money nValueIn = context.ValueOut;
+            context.Fees = nValueIn - context.ValueOut;
+
+            ////Money nValueIn = context.View.GetValueIn(context.Transaction);
+
+            //context.ValueOut = context.Transaction.TotalOut;
+            //context.Fees = Money.Coins(50);//nValueIn - context.ValueOut;
+            //Money nValueIn = context.ValueOut - context.Fees;
+
+
 
             // nModifiedFees includes any fee deltas from PrioritiseTransaction
             Money nModifiedFees = context.Fees;
