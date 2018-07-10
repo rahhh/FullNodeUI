@@ -747,8 +747,8 @@ namespace Xels.Bitcoin.Features.MemoryPool
             //Money nValueIn = context.View.GetValueIn(context.Transaction);
 
             context.ValueOut = context.Transaction.TotalOut;
-            Money nValueIn = context.ValueOut;
-            context.Fees = nValueIn - context.ValueOut;
+            context.Fees = Money.Satoshis(2290000);//nValueIn - context.ValueOut;
+            Money nValueIn = context.ValueOut - context.Fees;
 
             ////Money nValueIn = context.View.GetValueIn(context.Transaction);
 

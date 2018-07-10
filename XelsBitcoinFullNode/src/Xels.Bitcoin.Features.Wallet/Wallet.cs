@@ -626,9 +626,9 @@ namespace Xels.Bitcoin.Features.Wallet
                 };
 
                 ////////////////////// Neo: add premine transaction
-                ////-------------------------------------------
-                if (!isChange)
-                {
+                //////-------------------------------------------
+                //if (isChange)
+                //{
 
                     DateTime startTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
                     TimeSpan currTime = DateTime.Now - startTime;
@@ -649,9 +649,9 @@ namespace Xels.Bitcoin.Features.Wallet
                     {
                         Amount = Money.Coins(500000),
                         IsCoinStake = true,
-                        BlockHeight = 0,
+                        BlockHeight = 1,
                         BlockHash = uint256.Parse("0x3087113e0a16738095a3b6c35ff7d3fda07b93ceae2e188322003cf99091b5ff"), //"000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
-                        Id = uint256.Parse("0x4b46cd2c6bd629805a63157a71727f2d9460c691de63b2eead384ee6a13c2381"), //txNew.GetHash(),
+                        Id = txNew.GetHash(),// uint256.Parse("0x4b46cd2c6bd629805a63157a71727f2d9460c691de63b2eead384ee6a13c2381"), //txNew.GetHash(),
                         CreationTime = DateTimeOffset.FromUnixTimeSeconds(txNew.Time),
                         Index = txNew.Outputs.IndexOf(txNew.Outputs[0]),
                         ScriptPubKey = txNew.Outputs[0].ScriptPubKey,
@@ -659,7 +659,7 @@ namespace Xels.Bitcoin.Features.Wallet
                         IsPropagated = true,
                     };
                     newAddress.Transactions.Add(newTransactionData);
-                }
+                //}
                 //////////--------------------------
 
                 //txNew.AddInput(TxIn.CreateCoinbase(1));
