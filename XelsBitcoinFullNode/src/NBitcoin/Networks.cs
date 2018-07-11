@@ -618,7 +618,7 @@ namespace NBitcoin
             genesis.Header.Bits = nBits;
             genesis.Header.Nonce = nNonce;
             genesis.Header.Version = nVersion;
-            genesis.Transactions.Add(txNew);
+            //genesis.Transactions.Add(txNew);
             genesis.Transactions.Add(txNew2);
             genesis.Header.HashPrevBlock = uint256.Zero;
             genesis.UpdateMerkleRoot();

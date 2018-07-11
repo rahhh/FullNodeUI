@@ -96,11 +96,22 @@ namespace Xels.Bitcoin.Features.Consensus.CoinViews
                     if (this.GetCurrentHash(transaction) == null)
                     {
                         this.SetBlockHash(transaction, genesis.GetHash());
-
+                        
                         // Genesis coin is unspendable so do not add the coins.
                         transaction.Commit();
                     }
                 }
+
+                //////Neo **
+                //var genesis = ctx.Network.GetGenesis();
+                var genesisChainedBlock = new ChainedBlock(genesis.Header, this.network.GenesisHash, 0);
+                var chained = this.MakeNext(genesisChainedBlock, this.network);
+                uint256 txId = genesis.Transactions[0].GetHash();
+                Coins coins = new Coins(genesis.Transactions[0], 0);
+                var utxos = new UnspentOutputs[] { new UnspentOutputs(txId, coins) };
+                this.SaveChangesAsync(utxos, null, genesisChainedBlock.HashBlock, chained.HashBlock).Wait();
+                //this.SaveChangesAsync(new UnspentOutputs[] { new UnspentOutputs(genesis.Transactions[0].GetHash(), new Coins(genesis.Transactions[0], 0)) }, null, genesisChainedBlock.HashBlock, chained.HashBlock).Wait();
+                //Assert.NotNull(ctx.PersistentCoinView.FetchCoinsAsync(new[] { genesis.Transactions[0].GetHash() }).Result.UnspentOutputs[0]);
 
                 this.logger.LogTrace("(-)");
             });
@@ -108,7 +119,12 @@ namespace Xels.Bitcoin.Features.Consensus.CoinViews
             this.logger.LogTrace("(-)");
             return task;
         }
-
+        private ChainedBlock MakeNext(ChainedBlock previous, Network network)
+        {
+            var header = previous.Header.Clone();
+            header.HashPrevBlock = previous.HashBlock;
+            return new ChainedBlock(header, header.GetHash(network.NetworkOptions), previous);
+        }
         /// <inheritdoc />
         public override Task<FetchCoinsResponse> FetchCoinsAsync(uint256[] txIds)
         {

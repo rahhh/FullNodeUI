@@ -640,7 +640,7 @@ namespace Xels.Bitcoin.Features.Wallet
 
 
                     txNew.AddInput(new TxIn());
-                    txNew.Inputs[0].PrevOut.Hash = uint256.Parse("0x4b46cd2c6bd629805a63157a71727f2d9460c691de63b2eead384ee6a13c2381");
+                    txNew.Inputs[0].PrevOut.Hash = uint256.Parse("0x00000000000000000000000000000000000000000000000000000000000000000");
                     txNew.Inputs[0].PrevOut.N = 1;
                     txNew.Inputs[0].ScriptSig = new Script();
                     txNew.AddOutput(new TxOut(Money.Coins(500000), newAddress.ScriptPubKey));
@@ -649,9 +649,9 @@ namespace Xels.Bitcoin.Features.Wallet
                     {
                         Amount = Money.Coins(500000),
                         IsCoinStake = true,
-                        BlockHeight = 1,
-                        BlockHash = uint256.Parse("0x3087113e0a16738095a3b6c35ff7d3fda07b93ceae2e188322003cf99091b5ff"), //"000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
-                        Id = txNew.GetHash(),// uint256.Parse("0x4b46cd2c6bd629805a63157a71727f2d9460c691de63b2eead384ee6a13c2381"), //txNew.GetHash(),
+                        BlockHeight = 0,
+                        BlockHash = uint256.Parse("0xab88162111159ede0f58a6aba00756b971397d5b84ae01e5d8eb37c2591ca478"), //"000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
+                        Id = uint256.Parse("0xa2dfe19b6b9a6fb357250b475ed136db76284f7aa7d35dae0e85bb446e37b274"), //txNew.GetHash(),
                         CreationTime = DateTimeOffset.FromUnixTimeSeconds(txNew.Time),
                         Index = txNew.Outputs.IndexOf(txNew.Outputs[0]),
                         ScriptPubKey = txNew.Outputs[0].ScriptPubKey,
