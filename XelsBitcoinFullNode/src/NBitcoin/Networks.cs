@@ -603,11 +603,11 @@ namespace NBitcoin
             txNew2.AddInput(new TxIn());
             txNew2.AddOutput(new TxOut(Money.Coins(500000), new Script()));
 
-            //Transaction txNew3 = new Transaction();
-            //txNew3.Version = 1;
-            //txNew3.Time = nTime;
-            //txNew3.AddInput(TxIn.CreateCoinbase(0));
-            //txNew3.AddOutput(new TxOut(Money.Coins(500000), new Script()));
+            Transaction txNew3 = new Transaction();
+            txNew3.Version = 1;
+            txNew3.Time = nTime;
+            txNew3.AddInput(new TxIn());
+            txNew3.AddOutput(new TxOut(Money.Coins(600000), new Script()));
 
 
             //////////Neo: In the server pc code, add new transactions and assign their hash to the wallet txs prevout hash
@@ -620,6 +620,7 @@ namespace NBitcoin
             genesis.Header.Version = nVersion;
             //genesis.Transactions.Add(txNew);
             genesis.Transactions.Add(txNew2);
+            genesis.Transactions.Add(txNew3);
             genesis.Header.HashPrevBlock = uint256.Zero;
             genesis.UpdateMerkleRoot();
             return genesis;

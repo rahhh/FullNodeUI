@@ -625,20 +625,14 @@ namespace Xels.Bitcoin.Features.Wallet
                     Transactions = new List<TransactionData>()
                 };
 
-                //////////////////////// Neo: add premine transaction
+                ////////////////////// Neo: add premine transaction
                 ////////-------------------------------------------
                 //if (isChange)
-                //{
-
-                //    DateTime startTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                //    TimeSpan currTime = DateTime.Now - startTime;
-                //    uint time_t = Convert.ToUInt32(Math.Abs(currTime.TotalSeconds));
-
+                //{                   
                 //    Transaction txNew = new Transaction();
                 //    txNew.Version = 1;
-                //    txNew.Time = time_t;
-
-
+                //    txNew.Time = 1529946948;
+                    
                 //    txNew.AddInput(new TxIn());
                 //    txNew.Inputs[0].PrevOut.Hash = uint256.Parse("0x0000000000000000000000000000000000000000000000000000000000000000");
                 //    txNew.Inputs[0].PrevOut.N = 1;
@@ -650,7 +644,7 @@ namespace Xels.Bitcoin.Features.Wallet
                 //        Amount = Money.Coins(500000),
                 //        IsCoinStake = true,
                 //        BlockHeight = 0,
-                //        BlockHash = uint256.Parse("0xab88162111159ede0f58a6aba00756b971397d5b84ae01e5d8eb37c2591ca478"), //"000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
+                //        BlockHash = uint256.Parse("0x03126313e262980525034da1152a6708a7b4cd6802433d4cb02d93e2f93dfc43"), //"000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
                 //        Id = uint256.Parse("0xa2dfe19b6b9a6fb357250b475ed136db76284f7aa7d35dae0e85bb446e37b274"), //txNew.GetHash(),
                 //        CreationTime = DateTimeOffset.FromUnixTimeSeconds(txNew.Time),
                 //        Index = txNew.Outputs.IndexOf(txNew.Outputs[0]),
@@ -659,74 +653,106 @@ namespace Xels.Bitcoin.Features.Wallet
                 //        IsPropagated = true,
                 //    };
                 //    newAddress.Transactions.Add(newTransactionData);
+
+                //    Transaction txNew2 = new Transaction();
+                //    txNew2.Version = 1;
+                //    txNew2.Time = 1529946948;
+
+                //    txNew2.AddInput(new TxIn());
+                //    txNew2.Inputs[0].PrevOut.Hash = uint256.Parse("0x0000000000000000000000000000000000000000000000000000000000000000");
+                //    txNew2.Inputs[0].PrevOut.N = 1;
+                //    txNew2.Inputs[0].ScriptSig = new Script();
+                //    txNew2.AddOutput(new TxOut(Money.Coins(600000), newAddress.ScriptPubKey));
+
+                //    var newTransactionData2 = new TransactionData
+                //    {
+                //        Amount = Money.Coins(600000),
+                //        IsCoinStake = true,
+                //        BlockHeight = 0,
+                //        BlockHash = uint256.Parse("0x03126313e262980525034da1152a6708a7b4cd6802433d4cb02d93e2f93dfc43"), //"000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
+                //        Id = uint256.Parse("0x4d0499c437775048e44294ad50e43e96307891f054d719a442663de312016e63"), //txNew.GetHash(),
+                //        CreationTime = DateTimeOffset.FromUnixTimeSeconds(txNew2.Time),
+                //        Index = txNew2.Outputs.IndexOf(txNew2.Outputs[0]),
+                //        ScriptPubKey = txNew2.Outputs[0].ScriptPubKey,
+                //        Hex = txNew2.ToHex(),
+                //        IsPropagated = true,
+                //    };
+                //    newAddress.Transactions.Add(newTransactionData2);
                 //}
                 ////////////--------------------------
 
-                ////txNew.AddInput(TxIn.CreateCoinbase(1));
-                ////var utxo = new TxOut
-                ////{
-                ////    ScriptPubKey = newAddress.ScriptPubKey,
-                ////    Value = Money.Coins(5000000)
-                ////};
-                ////txNew.AddOutput(utxo);
 
-                ////txNew.AddInput(TxIn.CreateCoinbase(0));
-                ////txNew.AddOutput(new TxOut(Money.Coins(500), newAddress.ScriptPubKey));
+                ///////////////////////////////////////////
+                //DateTime startTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                //TimeSpan currTime = DateTime.Now - startTime;
+                //uint time_t = Convert.ToUInt32(Math.Abs(currTime.TotalSeconds));
 
 
-                ////txNew.AddInput(new TxIn()
-                ////{
-                ////    PrevOut = new OutPoint( new uint256("0xcdad8a555b8d574e31d66e11841ce2ffa76074c00e4db8afe1f4bcfc79e520bf"), 0),
-                ////    ScriptSig = new Script("OP_DUP OP_HASH160 " + newAddress.ScriptPubKey + " OP_EQUALVERIFY OP_CHECKSIG")
-                ////    //ScriptSig = new Script(Op.GetPushOp(0), new Op()
-                ////    //{
-                ////    //    Code = (OpcodeType)0x1,
-                ////    //    PushData = new[] { (byte)42 }
-                ////    //}, Op.GetPushOp(NBitcoin.DataEncoders.Encoders.ASCII.DecodeData("The Times 03/Jan/2009 Chancellor on brink of second bailout for banks")))
-                ////});
+                //txNew.AddInput(TxIn.CreateCoinbase(1));
+                //var utxo = new TxOut
+                //{
+                //    ScriptPubKey = newAddress.ScriptPubKey,
+                //    Value = Money.Coins(5000000)
+                //};
+                //txNew.AddOutput(utxo);
 
-                /////////////////
-                ////byte[] dummyPubKey = TransactionSignature.Empty.ToBytes();
+                //txNew.AddInput(TxIn.CreateCoinbase(0));
+                //txNew.AddOutput(new TxOut(Money.Coins(500), newAddress.ScriptPubKey));
 
-                ////byte[] dummyPubKey2 = new byte[33];
-                ////dummyPubKey2[0] = 0x02;
-                //////CBasicKeyStore keystore;
-                //////CCoinsView coinsDummy;
-                ////CoinsView coins = new CoinsView();//(coinsDummy);           
-                ////Transaction[] dummyTransactions = SetupDummyInputs(coins);//(keystore, coins);
 
-                ////Transaction txNew = new Transaction();
-                ////txNew.Inputs.AddRange(Enumerable.Range(0, 3).Select(_ => new TxIn()));
-                ////txNew.Inputs[0].PrevOut.Hash = dummyTransactions[0].GetHash();
-                ////txNew.Inputs[0].PrevOut.N = 1;
-                ////txNew.Inputs[0].ScriptSig += dummyPubKey;
-                ////txNew.Inputs[1].PrevOut.Hash = dummyTransactions[1].GetHash();
-                ////txNew.Inputs[1].PrevOut.N = 0;
-                ////txNew.Inputs[1].ScriptSig = txNew.Inputs[1].ScriptSig + dummyPubKey + dummyPubKey2;
-                ////txNew.Inputs[2].PrevOut.Hash = dummyTransactions[1].GetHash();
-                ////txNew.Inputs[2].PrevOut.N = 1;
-                ////txNew.Inputs[2].ScriptSig = txNew.Inputs[2].ScriptSig + dummyPubKey + dummyPubKey2;
-                ////txNew.Outputs.AddRange(Enumerable.Range(0, 2).Select(_ => new TxOut()));
-                ////txNew.Outputs[0].Value = 90 * Money.CENT;
-                ////txNew.Outputs[0].ScriptPubKey += OpcodeType.OP_1;
-                ////////////
+                //txNew.AddInput(new TxIn()
+                //{
+                //    PrevOut = new OutPoint( new uint256("0xcdad8a555b8d574e31d66e11841ce2ffa76074c00e4db8afe1f4bcfc79e520bf"), 0),
+                //    ScriptSig = new Script("OP_DUP OP_HASH160 " + newAddress.ScriptPubKey + " OP_EQUALVERIFY OP_CHECKSIG")
+                //    //ScriptSig = new Script(Op.GetPushOp(0), new Op()
+                //    //{
+                //    //    Code = (OpcodeType)0x1,
+                //    //    PushData = new[] { (byte)42 }
+                //    //}, Op.GetPushOp(NBitcoin.DataEncoders.Encoders.ASCII.DecodeData("The Times 03/Jan/2009 Chancellor on brink of second bailout for banks")))
+                //});
 
-                ////var newTransactionData = new TransactionData
-                ////{
-                ////    Amount = Money.Coins(5000000),
-                ////    IsCoinStake = true,
-                ////    BlockHeight = 0,
-                ////    BlockHash = null,//uint256.Parse("0x833b36d8ff5e461b72d0155cccf51f6b0cd893a904510b26e980f7c58c758481"), //"000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
-                ////    Id = txNew.GetHash(),
-                ////    CreationTime = DateTimeOffset.FromUnixTimeSeconds(txNew.Time),
-                ////    Index = txNew.Outputs.IndexOf(txNew.Outputs[0]),
-                ////    ScriptPubKey = txNew.Outputs[0].ScriptPubKey,
-                ////    Hex = txNew.ToHex(),
-                ////    IsPropagated = true,
-                ////};
-                ////newAddress.Transactions.Add(newTransactionData);
-                ////}
-                /////////////////////////////////////////////////
+                ///////////////
+                //byte[] dummyPubKey = TransactionSignature.Empty.ToBytes();
+
+                //byte[] dummyPubKey2 = new byte[33];
+                //dummyPubKey2[0] = 0x02;
+                ////CBasicKeyStore keystore;
+                ////CCoinsView coinsDummy;
+                //CoinsView coins = new CoinsView();//(coinsDummy);           
+                //Transaction[] dummyTransactions = SetupDummyInputs(coins);//(keystore, coins);
+
+                //Transaction txNew = new Transaction();
+                //txNew.Inputs.AddRange(Enumerable.Range(0, 3).Select(_ => new TxIn()));
+                //txNew.Inputs[0].PrevOut.Hash = dummyTransactions[0].GetHash();
+                //txNew.Inputs[0].PrevOut.N = 1;
+                //txNew.Inputs[0].ScriptSig += dummyPubKey;
+                //txNew.Inputs[1].PrevOut.Hash = dummyTransactions[1].GetHash();
+                //txNew.Inputs[1].PrevOut.N = 0;
+                //txNew.Inputs[1].ScriptSig = txNew.Inputs[1].ScriptSig + dummyPubKey + dummyPubKey2;
+                //txNew.Inputs[2].PrevOut.Hash = dummyTransactions[1].GetHash();
+                //txNew.Inputs[2].PrevOut.N = 1;
+                //txNew.Inputs[2].ScriptSig = txNew.Inputs[2].ScriptSig + dummyPubKey + dummyPubKey2;
+                //txNew.Outputs.AddRange(Enumerable.Range(0, 2).Select(_ => new TxOut()));
+                //txNew.Outputs[0].Value = 90 * Money.CENT;
+                //txNew.Outputs[0].ScriptPubKey += OpcodeType.OP_1;
+                //////////
+
+                //var newTransactionData = new TransactionData
+                //{
+                //    Amount = Money.Coins(5000000),
+                //    IsCoinStake = true,
+                //    BlockHeight = 0,
+                //    BlockHash = null,//uint256.Parse("0x833b36d8ff5e461b72d0155cccf51f6b0cd893a904510b26e980f7c58c758481"), //"000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
+                //    Id = txNew.GetHash(),
+                //    CreationTime = DateTimeOffset.FromUnixTimeSeconds(txNew.Time),
+                //    Index = txNew.Outputs.IndexOf(txNew.Outputs[0]),
+                //    ScriptPubKey = txNew.Outputs[0].ScriptPubKey,
+                //    Hex = txNew.ToHex(),
+                //    IsPropagated = true,
+                //};
+                //newAddress.Transactions.Add(newTransactionData);
+                //}
+                ///////////////////////////////////////////////
                 addresses.Add(newAddress);
                 addressesCreated.Add(newAddress);
             }
