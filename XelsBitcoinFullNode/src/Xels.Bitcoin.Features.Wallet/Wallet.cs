@@ -640,7 +640,7 @@ namespace Xels.Bitcoin.Features.Wallet
 
 
                     txNew.AddInput(new TxIn());
-                    txNew.Inputs[0].PrevOut.Hash = uint256.Parse("0x00000000000000000000000000000000000000000000000000000000000000000");
+                    txNew.Inputs[0].PrevOut.Hash = uint256.Parse("0x0000000000000000000000000000000000000000000000000000000000000000");
                     txNew.Inputs[0].PrevOut.N = 1;
                     txNew.Inputs[0].ScriptSig = new Script();
                     txNew.AddOutput(new TxOut(Money.Coins(500000), newAddress.ScriptPubKey));
