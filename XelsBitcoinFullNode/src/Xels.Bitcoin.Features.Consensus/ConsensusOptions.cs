@@ -34,7 +34,7 @@ namespace Xels.Bitcoin.Features.Consensus
             this.ProofOfStakeReward = Money.COIN;
             this.PremineReward = Money.Coins(98000000);
             this.PremineHeight = 2;
-            this.StakeMinConfirmations = 0;//Neo
+            this.StakeMinConfirmations = 1;//Neo
             this.StakeMinAge = 60;
             this.StakeModifierInterval = 10 * 60;
             this.MaxReorgLength = 500;
