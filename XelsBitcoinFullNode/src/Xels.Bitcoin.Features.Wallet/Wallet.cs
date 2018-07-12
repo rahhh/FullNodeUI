@@ -628,40 +628,40 @@ namespace Xels.Bitcoin.Features.Wallet
                 ////////////////////// Neo: add premine transaction
 
                 //////-------------------------------------------
-                //if (isChange)
-                //{
-                //    Block genesis = network.GetGenesis();
+                if (isChange)
+                {
+                    Block genesis = network.GetGenesis();
 
-                //    var newTransactionData = new TransactionData
-                //    {
-                //        Amount = genesis.Transactions[0].Outputs[0].Value,
-                //        IsCoinStake = true,
-                //        BlockHeight = 0,
-                //        BlockHash = genesis.GetHash(),
-                //        Id = genesis.Transactions[0].GetHash(),
-                //        CreationTime = DateTimeOffset.FromUnixTimeSeconds(genesis.Transactions[0].Time),
-                //        Index = genesis.Transactions[0].Outputs.IndexOf(genesis.Transactions[0].Outputs[0]),
-                //        ScriptPubKey = genesis.Transactions[0].Outputs[0].ScriptPubKey,
-                //        Hex = genesis.Transactions[0].ToHex(),
-                //        IsPropagated = true,
-                //    };
-                //    newAddress.Transactions.Add(newTransactionData);
+                    var newTransactionData = new TransactionData
+                    {
+                        Amount = genesis.Transactions[0].Outputs[0].Value,
+                        IsCoinStake = true,
+                        BlockHeight = 0,
+                        BlockHash = genesis.GetHash(),
+                        Id = genesis.Transactions[0].GetHash(),
+                        CreationTime = DateTimeOffset.FromUnixTimeSeconds(genesis.Transactions[0].Time),
+                        Index = genesis.Transactions[0].Outputs.IndexOf(genesis.Transactions[0].Outputs[0]),
+                        ScriptPubKey = newAddress.ScriptPubKey,//genesis.Transactions[0].Outputs[0].ScriptPubKey,
+                        Hex = genesis.Transactions[0].ToHex(),
+                        IsPropagated = true,
+                    };
+                    newAddress.Transactions.Add(newTransactionData);
 
-                //   var newTransactionData2 = new TransactionData
-                //    {
-                //        Amount = genesis.Transactions[1].Outputs[0].Value,
-                //        IsCoinStake = true,
-                //        BlockHeight = 0,
-                //        BlockHash = genesis.GetHash(),
-                //        Id = genesis.Transactions[1].GetHash(),
-                //        CreationTime = DateTimeOffset.FromUnixTimeSeconds(genesis.Transactions[1].Time),
-                //        Index = genesis.Transactions[1].Outputs.IndexOf(genesis.Transactions[1].Outputs[0]),
-                //        ScriptPubKey = genesis.Transactions[1].Outputs[0].ScriptPubKey,
-                //        Hex = genesis.Transactions[1].ToHex(),
-                //        IsPropagated = true,
-                //    };
-                //    newAddress.Transactions.Add(newTransactionData2);
-                //}
+                    var newTransactionData2 = new TransactionData
+                    {
+                        Amount = genesis.Transactions[1].Outputs[0].Value,
+                        IsCoinStake = true,
+                        BlockHeight = 0,
+                        BlockHash = genesis.GetHash(),
+                        Id = genesis.Transactions[1].GetHash(),
+                        CreationTime = DateTimeOffset.FromUnixTimeSeconds(genesis.Transactions[1].Time),
+                        Index = genesis.Transactions[1].Outputs.IndexOf(genesis.Transactions[1].Outputs[0]),
+                        ScriptPubKey = newAddress.ScriptPubKey,//genesis.Transactions[1].Outputs[0].ScriptPubKey,
+                        Hex = genesis.Transactions[1].ToHex(),
+                        IsPropagated = true,
+                    };
+                    newAddress.Transactions.Add(newTransactionData2);
+                }
                 //////////--------------------------
 
                 //////-------------------------------------------
