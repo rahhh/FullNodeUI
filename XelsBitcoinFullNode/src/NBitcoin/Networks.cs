@@ -580,56 +580,66 @@ namespace NBitcoin
 
         private static Block CreateXelsGenesisBlock(string pszTimestamp, uint nTime, uint nNonce, uint nBits, int nVersion, Money genesisReward)
         {
-            Transaction txNew = new Transaction();
-            txNew.Version = 1;
-            txNew.Time = nTime;
-            txNew.AddInput(new TxIn()
-            {
-                ScriptSig = new Script(Op.GetPushOp(0), new Op()
-                {
-                    Code = (OpcodeType)0x1,
-                    PushData = new[] { (byte)42 }
-                }, Op.GetPushOp(Encoders.ASCII.DecodeData(pszTimestamp)))
-            });
-            txNew.AddOutput(new TxOut()
-            {
-                Value = genesisReward,
-            });
+            //Transaction txNew = new Transaction();
+            //txNew.Version = 1;
+            //txNew.Time = nTime;
+            //txNew.AddInput(new TxIn()
+            //{
+            //    ScriptSig = new Script(Op.GetPushOp(0), new Op()
+            //    {
+            //        Code = (OpcodeType)0x1,
+            //        PushData = new[] { (byte)42 }
+            //    }, Op.GetPushOp(Encoders.ASCII.DecodeData(pszTimestamp)))
+            //});
+            //txNew.AddOutput(new TxOut()
+            //{
+            //    Value = genesisReward,
+            //});
 
+            ////////////////////////////////////
+            Transaction txNew2 = new Transaction();
+            txNew2.Version = 1;
+            txNew2.Time = nTime;
+            txNew2.AddInput(new TxIn());
+            txNew2.AddOutput(new TxOut(Money.Coins(500000), new Script()));
 
+            Transaction txNew3 = new Transaction();
+            txNew3.Version = 1;
+            txNew3.Time = nTime;
+            txNew3.AddInput(new TxIn());
+            txNew3.AddOutput(new TxOut(Money.Coins(600000), new Script()));
+            
+            ///////////////////////////////////////
+
+            /////////////////////////////////
             //Transaction txNew2 = new Transaction();
             //txNew2.Version = 1;
             //txNew2.Time = nTime;
             //txNew2.AddInput(new TxIn());
+            //txNew2.Inputs[0].PrevOut.Hash = uint256.Parse("0x0000000000000000000000000000000000000000000000000000000000000000");
+            //txNew2.Inputs[0].PrevOut.N = 1;
+            //txNew2.Inputs[0].ScriptSig = new Script();
             //txNew2.AddOutput(new TxOut(Money.Coins(500000), new Script()));
 
             //Transaction txNew3 = new Transaction();
             //txNew3.Version = 1;
             //txNew3.Time = nTime;
             //txNew3.AddInput(new TxIn());
+            //txNew3.Inputs[0].PrevOut.Hash = uint256.Parse("0x0000000000000000000000000000000000000000000000000000000000000000");
+            //txNew3.Inputs[0].PrevOut.N = 1;
+            //txNew3.Inputs[0].ScriptSig = new Script();
             //txNew3.AddOutput(new TxOut(Money.Coins(600000), new Script()));
-
-            Transaction txNew2 = new Transaction();
-            txNew2.Version = 1;
-            txNew2.Time = nTime;
-
-            txNew2.AddInput(new TxIn());
-            txNew2.Inputs[0].PrevOut.Hash = uint256.Parse("0x0000000000000000000000000000000000000000000000000000000000000000");
-            txNew2.Inputs[0].PrevOut.N = 1;
-            txNew2.Inputs[0].ScriptSig = new Script();
-            txNew2.AddOutput(new TxOut(Money.Coins(500000), new Script()));
-
-            Transaction txNew3 = new Transaction();
-            txNew3.Version = 1;
-            txNew3.Time = nTime;
-
-            txNew3.AddInput(new TxIn());
-            txNew3.Inputs[0].PrevOut.Hash = uint256.Parse("0x0000000000000000000000000000000000000000000000000000000000000000");
-            txNew3.Inputs[0].PrevOut.N = 1;
-            txNew3.Inputs[0].ScriptSig = new Script();
-            txNew3.AddOutput(new TxOut(Money.Coins(600000), new Script()));
-
+            //////////////////////////////
             //////////Neo: In the server pc code, add new transactions and assign their hash to the wallet txs prevout hash
+
+            /////////////////////////////////
+            //Transaction txNew2 = new Transaction();
+            //txNew2.Version = 1;
+            //txNew2.Time = nTime;
+            //txNew2.AddInput(TxIn.CreateCoinbase(0));
+            //txNew2.AddOutput(new TxOut(Money.Coins(500000), new Script("OP_DUP OP_HASH160 76a9142050a45fae622ca00596e6742b9e9f8fd51a583388ac OP_EQUALVERIFY OP_CHECKSIG")));
+
+            //////////////////////////////////
 
 
             Block genesis = new Block();
