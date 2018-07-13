@@ -611,35 +611,58 @@ namespace NBitcoin
 
             /////////////////////////////////////////
 
-            ///////////////////////////////
-            Transaction txNew2 = new Transaction();
-            txNew2.Version = 1;
-            txNew2.Time = nTime;
-            txNew2.AddInput(new TxIn());
-            txNew2.Inputs[0].PrevOut.Hash = uint256.Parse("0x0000000000000000000000000000000000000000000000000000000000000000");
-            txNew2.Inputs[0].PrevOut.N = 0;
-            txNew2.Inputs[0].ScriptSig = new Script();
-            txNew2.AddOutput(new TxOut(Money.Coins(500000), new Script()));
+            /////////////////////////////
+            Transaction[] genesisTransactions = new Transaction[4];
 
-            Transaction txNew3 = new Transaction();
-            txNew3.Version = 1;
-            txNew3.Time = nTime;
-            txNew3.AddInput(new TxIn());
-            txNew3.Inputs[0].PrevOut.Hash = uint256.Parse("0x0000000000000000000000000000000000000000000000000000000000000000");
-            txNew3.Inputs[0].PrevOut.N = 0;
-            txNew3.Inputs[0].ScriptSig = new Script();
-            txNew3.AddOutput(new TxOut(Money.Coins(600000), new Script()));
-            ////////////////////////////
+            for (int i = 0; i < 4; i++)
+            {
+                genesisTransactions[i] = new Transaction();
+                genesisTransactions[i].Version = 1;
+                genesisTransactions[i].Time = nTime + (uint)i;
+                genesisTransactions[i].AddInput(new TxIn());
+                genesisTransactions[i].Inputs[0].PrevOut.Hash = uint256.Parse("0x0000000000000000000000000000000000000000000000000000000000000000");
+                genesisTransactions[i].Inputs[0].PrevOut.N = 0;
+                genesisTransactions[i].Inputs[0].ScriptSig = new Script();
+                genesisTransactions[i].AddOutput(new TxOut(Money.Coins(500000), new Script()));
+            }
+            genesisTransactions[2].Inputs[0].PrevOut.Hash = genesisTransactions[0].GetHash();
+            genesisTransactions[3].Inputs[0].PrevOut.Hash = genesisTransactions[1].GetHash();
+            ////////////////////////////////////////
+            //Transaction txNew2 = new Transaction();
+            //txNew2.Version = 1;
+            //txNew2.Time = nTime;
+            //txNew2.AddInput(new TxIn());
+            //txNew2.Inputs[0].PrevOut.Hash = uint256.Parse("0x0000000000000000000000000000000000000000000000000000000000000000");
+            //txNew2.Inputs[0].PrevOut.N = 0;
+            //txNew2.Inputs[0].ScriptSig = new Script();
+            //txNew2.AddOutput(new TxOut(Money.Coins(500000), new Script()));
+
+            //Transaction txNew3 = new Transaction();
+            //txNew3.Version = 1;
+            //txNew3.Time = nTime;
+            //txNew3.AddInput(new TxIn());
+            //txNew3.Inputs[0].PrevOut.Hash = uint256.Parse("0x0000000000000000000000000000000000000000000000000000000000000000");
+            //txNew3.Inputs[0].PrevOut.N = 0;
+            //txNew3.Inputs[0].ScriptSig = new Script();
+            //txNew3.AddOutput(new TxOut(Money.Coins(600000), new Script()));
+            //////////////////////////
             //////////Neo: In the server pc code, add new transactions and assign their hash to the wallet txs prevout hash
 
-            /////////////////////////////////
+            ///////////////////////////////////
             //Transaction txNew2 = new Transaction();
             //txNew2.Version = 1;
             //txNew2.Time = nTime;
             //txNew2.AddInput(TxIn.CreateCoinbase(0));
-            //txNew2.AddOutput(new TxOut(Money.Coins(500000), new Script("OP_DUP OP_HASH160 76a9142050a45fae622ca00596e6742b9e9f8fd51a583388ac OP_EQUALVERIFY OP_CHECKSIG")));
+            //txNew2.AddOutput(new TxOut(Money.Coins(500000), new Script()));
 
-            //////////////////////////////////
+            //Transaction txNew3 = new Transaction();
+            //txNew3.Version = 1;
+            //txNew3.Time = nTime;
+            //txNew3.AddInput(TxIn.CreateCoinbase(0));
+            //txNew3.AddOutput(new TxOut(Money.Coins(600000), new Script()));
+
+
+            ////////////////////////////////////
 
 
             Block genesis = new Block();
@@ -648,8 +671,9 @@ namespace NBitcoin
             genesis.Header.Nonce = nNonce;
             genesis.Header.Version = nVersion;
             //genesis.Transactions.Add(txNew);
-            genesis.Transactions.Add(txNew2);
-            genesis.Transactions.Add(txNew3);
+            //genesis.Transactions.Add(txNew2);
+
+            genesis.Transactions = genesisTransactions.ToList();
             genesis.Header.HashPrevBlock = uint256.Zero;
             genesis.UpdateMerkleRoot();
             return genesis;

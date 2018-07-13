@@ -627,42 +627,42 @@ namespace Xels.Bitcoin.Features.Wallet
 
                 ////////////////////// Neo: add premine transaction
 
-                ////////-------------------------------------------
+                //////////-------------------------------------------
                 //if (isChange)
                 //{
                 //    Block genesis = network.GetGenesis();
 
                 //    var newTransactionData = new TransactionData
                 //    {
-                //        Amount = genesis.Transactions[0].Outputs[0].Value,
+                //        Amount = genesis.Transactions[2].Outputs[0].Value,
                 //        IsCoinStake = true,
                 //        BlockHeight = 0,
-                //        BlockHash = genesis.GetHash(),
-                //        Id = genesis.Transactions[0].GetHash(),
-                //        CreationTime = DateTimeOffset.FromUnixTimeSeconds(genesis.Transactions[0].Time),
-                //        Index = genesis.Transactions[0].Outputs.IndexOf(genesis.Transactions[0].Outputs[0]),
+                //        BlockHash = genesis.GetHash(network.NetworkOptions),
+                //        Id = genesis.Transactions[2].GetHash(),
+                //        CreationTime = DateTimeOffset.FromUnixTimeSeconds(genesis.Transactions[2].Time),
+                //        Index = genesis.Transactions[2].Outputs.IndexOf(genesis.Transactions[2].Outputs[0]),
                 //        ScriptPubKey = newAddress.ScriptPubKey,//genesis.Transactions[0].Outputs[0].ScriptPubKey,
-                //        Hex = genesis.Transactions[0].ToHex(),
+                //        Hex = genesis.Transactions[2].ToHex(),
                 //        IsPropagated = true,
                 //    };
                 //    newAddress.Transactions.Add(newTransactionData);
 
                 //    var newTransactionData2 = new TransactionData
                 //    {
-                //        Amount = genesis.Transactions[1].Outputs[0].Value,
+                //        Amount = genesis.Transactions[3].Outputs[0].Value,
                 //        IsCoinStake = true,
                 //        BlockHeight = 0,
-                //        BlockHash = genesis.GetHash(),
-                //        Id = genesis.Transactions[1].GetHash(),
-                //        CreationTime = DateTimeOffset.FromUnixTimeSeconds(genesis.Transactions[1].Time),
-                //        Index = genesis.Transactions[1].Outputs.IndexOf(genesis.Transactions[1].Outputs[0]),
+                //        BlockHash = genesis.GetHash(network.NetworkOptions),
+                //        Id = genesis.Transactions[3].GetHash(),
+                //        CreationTime = DateTimeOffset.FromUnixTimeSeconds(genesis.Transactions[3].Time),
+                //        Index = genesis.Transactions[3].Outputs.IndexOf(genesis.Transactions[3].Outputs[0]),
                 //        ScriptPubKey = newAddress.ScriptPubKey,//genesis.Transactions[1].Outputs[0].ScriptPubKey,
-                //        Hex = genesis.Transactions[1].ToHex(),
+                //        Hex = genesis.Transactions[3].ToHex(),
                 //        IsPropagated = true,
                 //    };
                 //    newAddress.Transactions.Add(newTransactionData2);
                 //}
-                ////////////--------------------------
+                //////////////--------------------------
 
                 //////-------------------------------------------
                 //if (isChange)
