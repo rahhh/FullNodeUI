@@ -23,7 +23,7 @@ namespace Xels.Bitcoin.Features.Wallet
     public class WalletManager : IWalletManager
     {
         /// <summary>Size of the buffer of unused addresses maintained in an account. </summary>
-        private const int UnusedAddressesBuffer = 20;
+        private const int UnusedAddressesBuffer = 1;
 
         /// <summary>Quantity of accounts created in a wallet file when a wallet is restored.</summary>
         private const int WalletRecoveryAccountsCount = 1;
