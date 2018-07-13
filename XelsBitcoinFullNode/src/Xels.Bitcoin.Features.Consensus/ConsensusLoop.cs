@@ -210,10 +210,27 @@ namespace Xels.Bitcoin.Features.Consensus
             this.peerBanning = peerBanning;
             this.consensusRules = consensusRules;
 
+
+            Block genesis = Network.XelsMain.GetGenesis();
+            var genesisChainedBlock = new ChainedBlock(genesis.Header, genesis.GetHash(), 0);
+            var chained = this.MakeNext(genesisChainedBlock, Network.XelsMain);
+            int length = genesis.Transactions.Count;
+            UnspentOutputs[] utxos = new UnspentOutputs[length];
+            for (int i = 0; i < length; i++)
+            {
+                utxos[i] = new UnspentOutputs(genesis.Transactions[i].GetHash(), new NBitcoin.BitcoinCore.Coins(genesis.Transactions[i], 0));
+            }
+            this.UTXOSet.SaveChangesAsync(utxos, null, genesisChainedBlock.HashBlock, chained.HashBlock).Wait();
+
             // chain of stake info can be null if POS is not enabled
             this.StakeChain = stakeChain;
         }
-
+        private ChainedBlock MakeNext(ChainedBlock previous, Network network)
+        {
+            var header = previous.Header.Clone();
+            header.HashPrevBlock = previous.HashBlock;
+            return new ChainedBlock(header, header.GetHash(network.NetworkOptions), previous);
+        }
         /// <inheritdoc/>
         public async Task StartAsync()
         {
