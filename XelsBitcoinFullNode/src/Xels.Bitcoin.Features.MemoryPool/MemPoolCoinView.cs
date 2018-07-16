@@ -108,15 +108,15 @@ namespace Xels.Bitcoin.Features.MemoryPool
             this.Set.TrySetCoins(coins.UnspentOutputs);
 
             // Neo:
-            //Block genesis = Network.XelsMain.GetGenesis();
-            //var genesisChainedBlock = new ChainedBlock(genesis.Header, genesis.GetHash(), 0);
-            //int length = genesis.Transactions.Count;
-            //UnspentOutputs[] utxos = new UnspentOutputs[length];
-            //for (int i = 0; i < length; i++)
-            //{
-            //    utxos[i] = new UnspentOutputs(genesis.Transactions[i].GetHash(), new NBitcoin.BitcoinCore.Coins(genesis.Transactions[i], 0));
-            //}
-            //this.Set.TrySetCoins(utxos);
+            Block genesis = Network.XelsMain.GetGenesis();
+            var genesisChainedBlock = new ChainedBlock(genesis.Header, genesis.GetHash(), 0);
+            int length = genesis.Transactions.Count;
+            UnspentOutputs[] utxos = new UnspentOutputs[length];
+            for (int i = 0; i < length; i++)
+            {
+                utxos[i] = new UnspentOutputs(genesis.Transactions[i].GetHash(), new NBitcoin.BitcoinCore.Coins(genesis.Transactions[i], 0));
+            }
+            this.Set.TrySetCoins(utxos);
 
         }
 
