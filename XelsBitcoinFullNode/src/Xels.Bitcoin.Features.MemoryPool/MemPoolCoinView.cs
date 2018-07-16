@@ -40,6 +40,18 @@ namespace Xels.Bitcoin.Features.MemoryPool
             this.mempoolLock = mempoolLock;
             this.mempoolValidator = mempoolValidator;
             this.Set = new UnspentOutputSet();
+
+            // Neo:
+            Block genesis = Network.XelsMain.GetGenesis();
+            int length = genesis.Transactions.Count;
+            UnspentOutputs[] utxos = new UnspentOutputs[length];
+            for (int i = 0; i < length; i++)
+            {
+                utxos[i] = new UnspentOutputs(genesis.Transactions[i].GetHash(), new NBitcoin.BitcoinCore.Coins(genesis.Transactions[i], 0));
+            }
+            this.Set.TrySetCoins(utxos);
+
+
         }
 
         /// <summary>
