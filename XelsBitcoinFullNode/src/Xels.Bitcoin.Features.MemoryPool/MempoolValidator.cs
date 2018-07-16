@@ -444,7 +444,7 @@ namespace Xels.Bitcoin.Features.MemoryPool
 
                 this.CheckAncestors(context);
                 this.CheckReplacment(context);
-                this.CheckAllInputs(context);
+                //this.CheckAllInputs(context);
 
                 // Remove conflicting transactions from the mempool
                 foreach (var it in context.AllConflicting)
@@ -733,13 +733,13 @@ namespace Xels.Bitcoin.Features.MemoryPool
             if (!CheckSequenceLocks(this.chain.Tip, context, PowConsensusValidator.StandardLocktimeVerifyFlags, context.LockPoints))
                 context.State.Fail(MempoolErrors.NonBIP68Final).Throw();
 
-            // Check for non-standard pay-to-script-hash in inputs
-            if (this.mempoolSettings.NodeSettings.RequireStandard && !this.AreInputsStandard(context.Transaction, context.View))
-                context.State.Invalid(MempoolErrors.NonstandardInputs).Throw();
+            //// Check for non-standard pay-to-script-hash in inputs
+            //if (this.mempoolSettings.NodeSettings.RequireStandard && !this.AreInputsStandard(context.Transaction, context.View))
+            //    context.State.Invalid(MempoolErrors.NonstandardInputs).Throw();
 
-            // Check for non-standard witness in P2WSH
-            if (context.Transaction.HasWitness && this.mempoolSettings.NodeSettings.RequireStandard && !this.IsWitnessStandard(context.Transaction, context.View))
-                context.State.Invalid(MempoolErrors.NonstandardWitness).Throw();
+            //// Check for non-standard witness in P2WSH
+            //if (context.Transaction.HasWitness && this.mempoolSettings.NodeSettings.RequireStandard && !this.IsWitnessStandard(context.Transaction, context.View))
+            //    context.State.Invalid(MempoolErrors.NonstandardWitness).Throw();
 
             context.SigOpsCost = this.consensusValidator.GetTransactionSignatureOperationCost(context.Transaction, context.View.Set,
                 new DeploymentFlags { ScriptFlags = ScriptVerify.Standard });
