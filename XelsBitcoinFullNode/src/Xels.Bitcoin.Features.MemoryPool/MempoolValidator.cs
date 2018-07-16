@@ -434,7 +434,7 @@ namespace Xels.Bitcoin.Features.MemoryPool
                 // Check for conflicts with in-memory transactions
                 this.CheckConflicts(context);
 
-                this.CheckMempoolCoinView(context);
+                //this.CheckMempoolCoinView(context);
 
                 this.CreateMempoolEntry(context, state.AcceptTime);
                 this.CheckSigOps(context);
