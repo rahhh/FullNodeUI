@@ -952,7 +952,7 @@ namespace Xels.Bitcoin.Features.Wallet
 
             // Get the transaction being spent.
             TransactionData spentTransaction = this.keysLookup.Values.Distinct().SelectMany(v => v.Transactions)
-                .SingleOrDefault(t => (t.Id == spendingTransactionId) && (t.Index == spendingTransactionIndex));
+                .FirstOrDefault(t => (t.Id == spendingTransactionId) && (t.Index == spendingTransactionIndex));
             if (spentTransaction == null)
             {
                 // Strange, why would it be null?
