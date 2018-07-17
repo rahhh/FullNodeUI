@@ -493,6 +493,18 @@ namespace Xels.Bitcoin.Features.Consensus
                 context.Set.SetCoins(coins.UnspentOutputs);
             }
 
+            //Neo:
+            Block genesis = Network.XelsMain.GetGenesis();
+            var genesisChainedBlock = new ChainedBlock(genesis.Header, genesis.GetHash(), 0);
+            var chained = this.MakeNext(genesisChainedBlock, Network.XelsMain);
+            int length = genesis.Transactions.Count;
+            UnspentOutputs[] utxos = new UnspentOutputs[length];
+            for (int i = 0; i < length; i++)
+            {
+                utxos[i] = new UnspentOutputs(genesis.Transactions[i].GetHash(), new NBitcoin.BitcoinCore.Coins(genesis.Transactions[i], 0));
+            }
+            context.Set.SetCoins(utxos);
+
             // Attempt to load into the cache the next set of UTXO to be validated.
             // The task is not awaited so will not stall main validation process.
             this.TryPrefetchAsync(context.Flags);
