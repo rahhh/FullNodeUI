@@ -210,7 +210,7 @@ namespace Xels.Bitcoin.Features.Consensus
             this.peerBanning = peerBanning;
             this.consensusRules = consensusRules;
 
-
+            //Neo:
             Block genesis = Network.XelsMain.GetGenesis();
             var genesisChainedBlock = new ChainedBlock(genesis.Header, genesis.GetHash(), 0);
             var chained = this.MakeNext(genesisChainedBlock, Network.XelsMain);
