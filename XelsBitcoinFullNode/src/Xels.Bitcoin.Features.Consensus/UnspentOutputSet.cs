@@ -65,7 +65,10 @@ namespace Xels.Bitcoin.Features.Consensus
 
         public void TrySetCoins(UnspentOutputs[] coins)
         {
-            //this.unspents = new Dictionary<uint256, UnspentOutputs>(coins.Length);
+            if(this.unspents == null)
+            {
+                this.unspents = new Dictionary<uint256, UnspentOutputs>(coins.Length);
+            }
             foreach (UnspentOutputs coin in coins)
             {
                 if (coin != null)
