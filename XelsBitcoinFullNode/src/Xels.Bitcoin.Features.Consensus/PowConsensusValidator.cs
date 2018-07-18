@@ -319,7 +319,10 @@ namespace Xels.Bitcoin.Features.Consensus
             for (int i = 0; i < transaction.Inputs.Count; i++)
             {
                 TxOut prevout = inputs.GetOutputFor(transaction.Inputs[i]);
-                signatureOperationCost += this.CountWitnessSignatureOperation(transaction.Inputs[i].ScriptSig, prevout.ScriptPubKey, transaction.Inputs[i].WitScript, flags);
+                if(prevout != null)
+                {
+                    signatureOperationCost += this.CountWitnessSignatureOperation(transaction.Inputs[i].ScriptSig, prevout.ScriptPubKey, transaction.Inputs[i].WitScript, flags);
+                }
             }
 
             return signatureOperationCost;
@@ -371,7 +374,7 @@ namespace Xels.Bitcoin.Features.Consensus
             for (int i = 0; i < transaction.Inputs.Count; i++)
             {
                 TxOut prevout = inputs.GetOutputFor(transaction.Inputs[i]);
-                if (prevout.ScriptPubKey.IsPayToScriptHash)
+                if (prevout != null && prevout.ScriptPubKey.IsPayToScriptHash)
                     sigOps += prevout.ScriptPubKey.GetSigOpCount(transaction.Inputs[i].ScriptSig);
             }
 
