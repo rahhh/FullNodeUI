@@ -105,7 +105,7 @@ namespace Xels.Bitcoin.Features.MemoryPool
             // from the pool (a race condition), block validation doesn't lock the mempool.
             // its safe to ignore duplicats on the UTXO set as duplicates mean a trx is in
             // a block and the block will soon remove the trx from the pool.
-            this.Set.SetCoins(coins.UnspentOutputs);
+            this.Set.TrySetCoins(coins.UnspentOutputs);
 
             // Neo:
             Block genesis = Network.XelsMain.GetGenesis();

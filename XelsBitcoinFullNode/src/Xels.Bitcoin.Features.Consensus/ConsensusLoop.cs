@@ -490,7 +490,7 @@ namespace Xels.Bitcoin.Features.Consensus
             {
                 uint256[] ids = this.GetIdsToFetch(context.BlockValidationContext.Block, context.Flags.EnforceBIP30);
                 FetchCoinsResponse coins = await this.UTXOSet.FetchCoinsAsync(ids).ConfigureAwait(false);
-                context.Set.SetCoins(coins.UnspentOutputs);
+                context.Set.TrySetCoins(coins.UnspentOutputs);
             }
 
             //Neo:
@@ -503,7 +503,7 @@ namespace Xels.Bitcoin.Features.Consensus
             {
                 utxos[i] = new UnspentOutputs(genesis.Transactions[i].GetHash(), new NBitcoin.BitcoinCore.Coins(genesis.Transactions[i], 0));
             }
-            context.Set.SetCoins(utxos);
+            context.Set.TrySetCoins(utxos);
 
             // Attempt to load into the cache the next set of UTXO to be validated.
             // The task is not awaited so will not stall main validation process.
