@@ -730,8 +730,8 @@ namespace Xels.Bitcoin.Features.MemoryPool
             // be mined yet.
             // Must keep pool.cs for this unless we change CheckSequenceLocks to take a
             // CoinsViewCache instead of create its own
-            if (!CheckSequenceLocks(this.chain.Tip, context, PowConsensusValidator.StandardLocktimeVerifyFlags, context.LockPoints))
-                context.State.Fail(MempoolErrors.NonBIP68Final).Throw();
+            //if (!CheckSequenceLocks(this.chain.Tip, context, PowConsensusValidator.StandardLocktimeVerifyFlags, context.LockPoints))
+            //    context.State.Fail(MempoolErrors.NonBIP68Final).Throw();
 
             //// Check for non-standard pay-to-script-hash in inputs
             //if (this.mempoolSettings.NodeSettings.RequireStandard && !this.AreInputsStandard(context.Transaction, context.View))
