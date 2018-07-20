@@ -23,7 +23,7 @@ namespace Xels.Bitcoin.Features.Wallet
     public class WalletManager : IWalletManager
     {
         /// <summary>Size of the buffer of unused addresses maintained in an account. </summary>
-        private const int UnusedAddressesBuffer = 20;
+        private const int UnusedAddressesBuffer = 1;
 
         /// <summary>Quantity of accounts created in a wallet file when a wallet is restored.</summary>
         private const int WalletRecoveryAccountsCount = 1;
@@ -952,7 +952,7 @@ namespace Xels.Bitcoin.Features.Wallet
 
             // Get the transaction being spent.
             TransactionData spentTransaction = this.keysLookup.Values.Distinct().SelectMany(v => v.Transactions)
-                .SingleOrDefault(t => (t.Id == spendingTransactionId) && (t.Index == spendingTransactionIndex));
+                .FirstOrDefault(t => (t.Id == spendingTransactionId) && (t.Index == spendingTransactionIndex));
             if (spentTransaction == null)
             {
                 // Strange, why would it be null?

@@ -580,64 +580,34 @@ namespace NBitcoin
 
         private static Block CreateXelsGenesisBlock(string pszTimestamp, uint nTime, uint nNonce, uint nBits, int nVersion, Money genesisReward)
         {
-            //var publicKeyHash = new KeyId("ShP8gxfspZUAxuPXdR4XcgCrpbdhjXQs3S");
-            //BitcoinAddress mainNetAddress = publicKeyHash.GetAddress(Network.Main);
-            ////Console.WriteLine(mainNetAddress.ScriptPubKey);
 
-            //Script genesisOutputScript = new Script(Op.GetPushOp(Encoders.Hex.DecodeData("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f")), OpcodeType.OP_CHECKSIG);
+            ////////////////////// Neo: add premine transaction to Genesis Block
 
+            Transaction[] genesisTransactions = new Transaction[4];
 
-            Transaction txNew = new Transaction();
-            txNew.Version = 1;
-            txNew.Time = nTime;
-            txNew.AddInput(new TxIn()
+            for (int i = 0; i < 4; i++)
             {
-                ScriptSig = new Script(Op.GetPushOp(0), new Op()
-                {
-                    Code = (OpcodeType)0x1,
-                    PushData = new[] { (byte)42 }
-                }, Op.GetPushOp(Encoders.ASCII.DecodeData(pszTimestamp)))
-            });
-            txNew.AddOutput(new TxOut()
-            {
-                Value = genesisReward,
-            });
-
-            //Transaction txNew2 = new Transaction();
-            //txNew2.Version = 1;
-            //txNew2.Time = nTime;
-            //txNew2.AddInput(new TxIn()
-            //{
-            //    ScriptSig = new Script(Op.GetPushOp(1), new Op()
-            //    {
-            //        Code = (OpcodeType)0x1,
-            //        PushData = new[] { (byte)42 }
-            //    }, Op.GetPushOp(Encoders.ASCII.DecodeData(pszTimestamp)))
-            //});
-            //var dest = BitcoinAddress.Create("Scn853nFpivwm5ULLK6Z9t3fswmfq5ZB1x", Network.XelsMain);
-            //txNew2.AddOutput(new TxOut()
-            //{
-            //    ScriptPubKey = dest.ScriptPubKey,
-            //    Value = Money.Coins(5000m),
-            //});
-
-            //Transaction tx = new Transaction();
-            //var input = new TxIn();
-            //input.PrevOut = new OutPoint(new uint256(RandomUtils.GetBytes(32)), 0);
-            //tx.AddInput(input);
-
-            //TxOut output = new TxOut();
-            //var dest = BitcoinAddress.Create("Scn853nFpivwm5ULLK6Z9t3fswmfq5ZB1x");
-            //output.Value = Money.Coins(5000m);
-
-            //tx.AddOutput(output);
-
+                genesisTransactions[i] = new Transaction();
+                genesisTransactions[i].Version = 1;
+                genesisTransactions[i].Time = nTime + (uint)i;
+                genesisTransactions[i].AddInput(new TxIn());
+                genesisTransactions[i].Inputs[0].PrevOut.Hash = uint256.Parse("0x0000000000000000000000000000000000000000000000000000000000000000");
+                genesisTransactions[i].Inputs[0].PrevOut.N = 0;
+                genesisTransactions[i].Inputs[0].ScriptSig = new Script();
+                genesisTransactions[i].AddOutput(new TxOut(Money.Coins(500000), new Script()));
+            }
+            genesisTransactions[2].Inputs[0].PrevOut.Hash = genesisTransactions[0].GetHash();
+            genesisTransactions[3].Inputs[0].PrevOut.Hash = genesisTransactions[1].GetHash();
+                        
             Block genesis = new Block();
             genesis.Header.BlockTime = Utils.UnixTimeToDateTime(nTime);
             genesis.Header.Bits = nBits;
             genesis.Header.Nonce = nNonce;
             genesis.Header.Version = nVersion;
-            genesis.Transactions.Add(txNew);
+            //genesis.Transactions.Add(txNew);
+            genesis.Transactions = genesisTransactions.ToList();
+            //genesis.Transactions.Add(fundingTransaction);
+            //genesis.Transactions.Add(txNew2);
             //genesis.Transactions.Add(txNew2);
             //genesis.Transactions.Add(tx);
             genesis.Header.HashPrevBlock = uint256.Zero;
@@ -646,3 +616,64 @@ namespace NBitcoin
         }
     }
 }
+
+
+////var publicKeyHash = new KeyId("ShP8gxfspZUAxuPXdR4XcgCrpbdhjXQs3S");
+////BitcoinAddress mainNetAddress = publicKeyHash.GetAddress(Network.Main);
+//////Console.WriteLine(mainNetAddress.ScriptPubKey);
+
+////Script genesisOutputScript = new Script(Op.GetPushOp(Encoders.Hex.DecodeData("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f")), OpcodeType.OP_CHECKSIG);
+
+
+//Transaction txNew = new Transaction();
+//txNew.Version = 1;
+//txNew.Time = nTime;
+//txNew.AddInput(new TxIn()
+//{
+//    ScriptSig = new Script(Op.GetPushOp(0), new Op()
+//    {
+//        Code = (OpcodeType)0x1,
+//        PushData = new[] { (byte)42 }
+//    }, Op.GetPushOp(Encoders.ASCII.DecodeData(pszTimestamp)))
+//});
+//txNew.AddOutput(new TxOut()
+//{
+//    Value = genesisReward,
+//});
+
+////var fundingTransaction = Transaction.Parse("0100000018f62b5b01e1f87273f4e266d0f2d08a4a08807dc2c2e8f6e47bcc488201652a03778de196000000001f76a9012076a9140c729d66c125bf5170173875f7819a50dbc5be5a88ac88acffffffff0100f2052a010000001976a9140c729d66c125bf5170173875f7819a50dbc5be5a88ac00000000");
+
+//Transaction txNew2 = new Transaction();
+//txNew2.Version = 1;
+//txNew2.Time = nTime;
+//txNew2.AddInput(TxIn.CreateCoinbase(0));
+//txNew2.AddOutput(new TxOut(Money.Coins(50), new Script("OP_DUP OP_HASH160 76a9148d67c0749b2b48f306ecdbf03ad7d83e4830812a88ac OP_EQUALVERIFY OP_CHECKSIG")));
+
+////Transaction txNew2 = new Transaction();
+////txNew2.Version = 1;
+////txNew2.Time = nTime;
+////txNew2.AddInput(new TxIn()
+////{
+////    ScriptSig = new Script(Op.GetPushOp(1), new Op()
+////    {
+////        Code = (OpcodeType)0x1,
+////        PushData = new[] { (byte)42 }
+////    }, Op.GetPushOp(Encoders.ASCII.DecodeData(pszTimestamp)))
+////});
+////var dest = BitcoinAddress.Create("Scn853nFpivwm5ULLK6Z9t3fswmfq5ZB1x", Network.XelsMain);
+////txNew2.AddOutput(new TxOut()
+////{
+////    ScriptPubKey = dest.ScriptPubKey,
+////    Value = Money.Coins(5000m),
+////});
+
+////Transaction tx = new Transaction();
+////var input = new TxIn();
+////input.PrevOut = new OutPoint(new uint256(RandomUtils.GetBytes(32)), 0);
+////tx.AddInput(input);
+
+////TxOut output = new TxOut();
+////var dest = BitcoinAddress.Create("Scn853nFpivwm5ULLK6Z9t3fswmfq5ZB1x");
+////output.Value = Money.Coins(5000m);
+
+////tx.AddOutput(output);

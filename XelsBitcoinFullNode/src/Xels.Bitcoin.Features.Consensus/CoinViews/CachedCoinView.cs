@@ -158,6 +158,20 @@ namespace Xels.Bitcoin.Features.Consensus.CoinViews
             this.unspents = new Dictionary<uint256, CacheItem>();
             this.PerformanceCounter = new CachePerformanceCounter(this.dateTimeProvider);
             this.lastCacheFlushTime = this.dateTimeProvider.GetUtcNow();
+
+            // Neo:
+            Block genesis = Network.XelsMain.GetGenesis();
+            int length = genesis.Transactions.Count;
+            for (int i = 0; i < length; i++)
+            {
+                UnspentOutputs unsp = new UnspentOutputs(genesis.Transactions[i].GetHash(), new NBitcoin.BitcoinCore.Coins(genesis.Transactions[i], 0));
+                CacheItem cache = new CacheItem();
+                cache.ExistInInner = unsp != null;
+                cache.IsDirty = false;
+                cache.UnspentOutputs = unsp;
+                cache.OriginalOutputs = unsp?.Outputs.ToArray();
+                this.unspents.TryAdd(unsp.TransactionId, cache);
+            }
         }
 
         /// <inheritdoc />

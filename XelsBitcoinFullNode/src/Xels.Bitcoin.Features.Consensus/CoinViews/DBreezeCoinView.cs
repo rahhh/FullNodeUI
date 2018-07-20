@@ -87,26 +87,68 @@ namespace Xels.Bitcoin.Features.Consensus.CoinViews
             Task task = Task.Run(() =>
             {
                 this.logger.LogTrace("()");
-
+                uint256 currentHash;
                 using (DBreeze.Transactions.Transaction transaction = this.dbreeze.GetTransaction())
                 {
                     transaction.ValuesLazyLoadingIsOn = false;
                     transaction.SynchronizeTables("BlockHash");
 
-                    if (this.GetCurrentHash(transaction) == null)
+                    currentHash = this.GetCurrentHash(transaction);
+                    if (currentHash == null)
                     {
-                        this.SetBlockHash(transaction, genesis.GetHash());
+                        this.SetBlockHash(transaction, genesis.GetHash(this.network.NetworkOptions));
 
                         // Genesis coin is unspendable so do not add the coins.
                         transaction.Commit();
                     }
                 }
 
+                //////// Neo: Adding the genesis transactions outputs in coin view
+                if (currentHash == null)
+                {
+                    var genesisChainedBlock = new ChainedBlock(genesis.Header, this.network.GenesisHash, 0);
+                    var chained = this.MakeNext(genesisChainedBlock, this.network);
+                    int length = genesis.Transactions.Count;
+                    UnspentOutputs[] utxos = new UnspentOutputs[length];
+                    for (int i = 0; i < length; i++)
+                    {
+                        utxos[i] = new UnspentOutputs(genesis.Transactions[i].GetHash(), new Coins(genesis.Transactions[i], 0));
+                    }
+                    //uint256 txId = genesis.Transactions[0].GetHash();
+                    //uint256 txId2 = genesis.Transactions[1].GetHash();
+                    //Coins coins = new Coins(genesis.Transactions[0], 0);
+                    //Coins coins2 = new Coins(genesis.Transactions[1], 0);
+                    //UnspentOutputs[] utxos = new UnspentOutputs[2];
+                    //utxos[0] = new UnspentOutputs(txId, coins);
+                    //utxos[1] = new UnspentOutputs(txId2, coins2);
+
+                    this.SaveChangesAsync(utxos, null, genesisChainedBlock.HashBlock, chained.HashBlock).Wait();
+                }
+                //this.SaveChangesAsync(new UnspentOutputs[] { new UnspentOutputs(genesis.Transactions[0].GetHash(), new Coins(genesis.Transactions[0], 0)) }, null, genesisChainedBlock.HashBlock, chained.HashBlock).Wait();
+                //this.SaveChangesAsync(new UnspentOutputs[] { new UnspentOutputs(genesis.Transactions[1].GetHash(), new Coins(genesis.Transactions[1], 0)) }, null, genesisChainedBlock.HashBlock, chained.HashBlock).Wait();
+                //Assert.NotNull(ctx.PersistentCoinView.FetchCoinsAsync(new[] { genesis.Transactions[0].GetHash() }).Result.UnspentOutputs[0]);
+                ///////////////////////////////
+
+
+
                 this.logger.LogTrace("(-)");
             });
 
             this.logger.LogTrace("(-)");
             return task;
+        }
+
+        /// <summary>
+        /// Neo: 
+        /// </summary>
+        /// <param name="previous"></param>
+        /// <param name="network"></param>
+        /// <returns></returns>
+        private ChainedBlock MakeNext(ChainedBlock previous, Network network)
+        {
+            var header = previous.Header.Clone();
+            header.HashPrevBlock = previous.HashBlock;
+            return new ChainedBlock(header, header.GetHash(network.NetworkOptions), previous);
         }
 
         /// <inheritdoc />

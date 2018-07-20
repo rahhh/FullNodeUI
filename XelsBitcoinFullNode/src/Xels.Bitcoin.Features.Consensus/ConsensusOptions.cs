@@ -28,13 +28,13 @@ namespace Xels.Bitcoin.Features.Consensus
         public PosConsensusOptions()
         {
             this.MaxMoney = long.MaxValue;
-            this.CoinbaseMaturity = 50;
+            this.CoinbaseMaturity = 1;
 
             this.ProofOfWorkReward = Money.Coins(4);
             this.ProofOfStakeReward = Money.COIN;
             this.PremineReward = Money.Coins(98000000);
             this.PremineHeight = 2;
-            this.StakeMinConfirmations = 50;
+            this.StakeMinConfirmations = 1;
             this.StakeMinAge = 60;
             this.StakeModifierInterval = 10 * 60;
             this.MaxReorgLength = 500;

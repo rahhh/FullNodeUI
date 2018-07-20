@@ -520,21 +520,27 @@ namespace Xels.Bitcoin.Features.Miner
                 {
                     UnspentOutputs set = coinset.UnspentOutputs.FirstOrDefault(f => f?.TransactionId == infoTransaction.Transaction.Id);
                     TxOut utxo = (set != null) && (infoTransaction.Transaction.Index < set.Outputs.Length) ? set.Outputs[infoTransaction.Transaction.Index] : null;
-                    uint256 hashBock = this.chain.GetBlock((int) set.Height)?.HashBlock;
 
-                    if ((utxo != null) && (utxo.Value > Money.Zero) && (hashBock != null))
+                    if ((utxo != null) && (utxo.Value > Money.Zero))
                     {
-                        var utxoStakeDescription = new UtxoStakeDescription();
+                        uint256 hashBock = this.chain.GetBlock((int)set.Height)?.HashBlock;
 
-                        utxoStakeDescription.TxOut = utxo;
-                        utxoStakeDescription.OutPoint = new OutPoint(set.TransactionId, infoTransaction.Transaction.Index);
-                        utxoStakeDescription.Address = infoTransaction.Address;
-                        utxoStakeDescription.HashBlock = hashBock;
-                        utxoStakeDescription.UtxoSet = set;
-                        utxoStakeDescription.Secret = walletSecret; // Temporary.
-                        utxoStakeDescriptions.Add(utxoStakeDescription);
-                        totalBalance += utxo.Value;
-                        this.logger.LogTrace("UTXO '{0}' with value {1} might be available for staking.", utxoStakeDescription.OutPoint, utxo.Value);
+                        if (hashBock != null)
+                        {
+                            var utxoStakeDescription = new UtxoStakeDescription();
+
+                            utxoStakeDescription.TxOut = utxo;
+                            utxoStakeDescription.OutPoint =
+                                new OutPoint(set.TransactionId, infoTransaction.Transaction.Index);
+                            utxoStakeDescription.Address = infoTransaction.Address;
+                            utxoStakeDescription.HashBlock = hashBock;
+                            utxoStakeDescription.UtxoSet = set;
+                            utxoStakeDescription.Secret = walletSecret; // Temporary.
+                            utxoStakeDescriptions.Add(utxoStakeDescription);
+                            totalBalance += utxo.Value;
+                            this.logger.LogTrace("UTXO '{0}' with value {1} might be available for staking.",
+                                utxoStakeDescription.OutPoint, utxo.Value);
+                        }
                     }
                 }
 
