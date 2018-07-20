@@ -680,53 +680,53 @@ namespace Xels.Bitcoin.Features.Wallet
             return addressesCreated;
         }
 
-        ///////////////////////////// Neo: Set Dummy Inputs 
-        private Transaction[] SetupDummyInputs(CoinsView coinsRet)
-        {
-            Transaction[] dummyTransactions = Enumerable.Range(0, 2).Select(_ => new Transaction()).ToArray();
+        /////////////////////////////// Neo: Set Dummy Inputs 
+        //private Transaction[] SetupDummyInputs(CoinsView coinsRet)
+        //{
+        //    Transaction[] dummyTransactions = Enumerable.Range(0, 2).Select(_ => new Transaction()).ToArray();
 
-            ////Neo
-            byte[] dummyPubKey = TransactionSignature.Empty.ToBytes();
-            byte[] dummyPubKey2 = new byte[33];
-            dummyPubKey2[0] = 0x02;
-            /////////////
-            // Add some keys to the keystore:
-            Key[] key = Enumerable.Range(0, 4).Select((_, i) => new Key(i % 2 != 0)).ToArray();
+        //    ////Neo
+        //    byte[] dummyPubKey = TransactionSignature.Empty.ToBytes();
+        //    byte[] dummyPubKey2 = new byte[33];
+        //    dummyPubKey2[0] = 0x02;
+        //    /////////////
+        //    // Add some keys to the keystore:
+        //    Key[] key = Enumerable.Range(0, 4).Select((_, i) => new Key(i % 2 != 0)).ToArray();
 
-            //// Neo:
-            dummyTransactions[0].Inputs.AddRange(Enumerable.Range(0, 3).Select(_ => new TxIn()));
-            dummyTransactions[0].Inputs[0].PrevOut.Hash = dummyTransactions[0].GetHash();
-            dummyTransactions[0].Inputs[0].PrevOut.N = 1;
-            dummyTransactions[0].Inputs[0].ScriptSig += dummyPubKey;
-            dummyTransactions[0].Inputs[1].PrevOut.Hash = dummyTransactions[1].GetHash();
-            dummyTransactions[0].Inputs[1].PrevOut.N = 0;
-            dummyTransactions[0].Inputs[1].ScriptSig = dummyTransactions[0].Inputs[1].ScriptSig + dummyPubKey + dummyPubKey2;
-            dummyTransactions[0].Inputs[2].PrevOut.Hash = dummyTransactions[1].GetHash();
-            dummyTransactions[0].Inputs[2].PrevOut.N = 1;
-            dummyTransactions[0].Inputs[2].ScriptSig = dummyTransactions[0].Inputs[2].ScriptSig + dummyPubKey + dummyPubKey2;
-            ///////////
+        //    //// Neo:
+        //    dummyTransactions[0].Inputs.AddRange(Enumerable.Range(0, 3).Select(_ => new TxIn()));
+        //    dummyTransactions[0].Inputs[0].PrevOut.Hash = dummyTransactions[0].GetHash();
+        //    dummyTransactions[0].Inputs[0].PrevOut.N = 1;
+        //    dummyTransactions[0].Inputs[0].ScriptSig += dummyPubKey;
+        //    dummyTransactions[0].Inputs[1].PrevOut.Hash = dummyTransactions[1].GetHash();
+        //    dummyTransactions[0].Inputs[1].PrevOut.N = 0;
+        //    dummyTransactions[0].Inputs[1].ScriptSig = dummyTransactions[0].Inputs[1].ScriptSig + dummyPubKey + dummyPubKey2;
+        //    dummyTransactions[0].Inputs[2].PrevOut.Hash = dummyTransactions[1].GetHash();
+        //    dummyTransactions[0].Inputs[2].PrevOut.N = 1;
+        //    dummyTransactions[0].Inputs[2].ScriptSig = dummyTransactions[0].Inputs[2].ScriptSig + dummyPubKey + dummyPubKey2;
+        //    ///////////
 
-            // Create some dummy input transactions
-            dummyTransactions[0].Outputs.AddRange(Enumerable.Range(0, 2).Select(_ => new TxOut()));
-            dummyTransactions[0].Outputs[0].Value = Money.Coins(200);
-            dummyTransactions[0].Outputs[0].ScriptPubKey = dummyTransactions[0].Outputs[0].ScriptPubKey + key[0].PubKey.ToBytes() + OpcodeType.OP_CHECKSIG;
-            dummyTransactions[0].Outputs[1].Value = Money.Coins(200);
-            dummyTransactions[0].Outputs[1].ScriptPubKey = dummyTransactions[0].Outputs[1].ScriptPubKey + key[1].PubKey.ToBytes() + OpcodeType.OP_CHECKSIG;
-            coinsRet.AddTransaction(dummyTransactions[0], 0);
-
-
-            dummyTransactions[1].Outputs.AddRange(Enumerable.Range(0, 2).Select(_ => new TxOut()));
-            dummyTransactions[1].Outputs[0].Value = Money.Coins(100);
-            dummyTransactions[1].Outputs[0].ScriptPubKey = key[2].PubKey.GetAddress(Network.XelsMain).ScriptPubKey;
-            dummyTransactions[1].Outputs[1].Value = Money.Coins(100);
-            dummyTransactions[1].Outputs[1].ScriptPubKey = key[3].PubKey.GetAddress(Network.XelsMain).ScriptPubKey;
-            coinsRet.AddTransaction(dummyTransactions[1], 0);
+        //    // Create some dummy input transactions
+        //    dummyTransactions[0].Outputs.AddRange(Enumerable.Range(0, 2).Select(_ => new TxOut()));
+        //    dummyTransactions[0].Outputs[0].Value = Money.Coins(200);
+        //    dummyTransactions[0].Outputs[0].ScriptPubKey = dummyTransactions[0].Outputs[0].ScriptPubKey + key[0].PubKey.ToBytes() + OpcodeType.OP_CHECKSIG;
+        //    dummyTransactions[0].Outputs[1].Value = Money.Coins(200);
+        //    dummyTransactions[0].Outputs[1].ScriptPubKey = dummyTransactions[0].Outputs[1].ScriptPubKey + key[1].PubKey.ToBytes() + OpcodeType.OP_CHECKSIG;
+        //    coinsRet.AddTransaction(dummyTransactions[0], 0);
 
 
-            return dummyTransactions;
-        }
+        //    dummyTransactions[1].Outputs.AddRange(Enumerable.Range(0, 2).Select(_ => new TxOut()));
+        //    dummyTransactions[1].Outputs[0].Value = Money.Coins(100);
+        //    dummyTransactions[1].Outputs[0].ScriptPubKey = key[2].PubKey.GetAddress(Network.XelsMain).ScriptPubKey;
+        //    dummyTransactions[1].Outputs[1].Value = Money.Coins(100);
+        //    dummyTransactions[1].Outputs[1].ScriptPubKey = key[3].PubKey.GetAddress(Network.XelsMain).ScriptPubKey;
+        //    coinsRet.AddTransaction(dummyTransactions[1], 0);
 
-        ///////////////////////////// Neo: Set Dummy Inputs  ends here
+
+        //    return dummyTransactions;
+        //}
+
+        /////////////////////////////// Neo: Set Dummy Inputs  ends here
 
 
 

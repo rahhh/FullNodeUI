@@ -104,26 +104,26 @@ namespace Xels.Bitcoin.Features.Consensus.CoinViews
                 }
 
                 //////// Neo: Adding the genesis transactions outputs in coin view
-                if (currentHash == null)
-                {
-                    var genesisChainedBlock = new ChainedBlock(genesis.Header, this.network.GenesisHash, 0);
-                    var chained = this.MakeNext(genesisChainedBlock, this.network);
-                    int length = genesis.Transactions.Count;
-                    UnspentOutputs[] utxos = new UnspentOutputs[length];
-                    for (int i = 0; i < length; i++)
-                    {
-                        utxos[i] = new UnspentOutputs(genesis.Transactions[i].GetHash(), new Coins(genesis.Transactions[i], 0));
-                    }
-                    //uint256 txId = genesis.Transactions[0].GetHash();
-                    //uint256 txId2 = genesis.Transactions[1].GetHash();
-                    //Coins coins = new Coins(genesis.Transactions[0], 0);
-                    //Coins coins2 = new Coins(genesis.Transactions[1], 0);
-                    //UnspentOutputs[] utxos = new UnspentOutputs[2];
-                    //utxos[0] = new UnspentOutputs(txId, coins);
-                    //utxos[1] = new UnspentOutputs(txId2, coins2);
+                //if (currentHash == null)
+                //{
+                //    var genesisChainedBlock = new ChainedBlock(genesis.Header, this.network.GenesisHash, 0);
+                //    var chained = this.MakeNext(genesisChainedBlock, this.network);
+                //    int length = genesis.Transactions.Count;
+                //    UnspentOutputs[] utxos = new UnspentOutputs[length];
+                //    for (int i = 0; i < length; i++)
+                //    {
+                //        utxos[i] = new UnspentOutputs(genesis.Transactions[i].GetHash(), new Coins(genesis.Transactions[i], 0));
+                //    }
+                //    //uint256 txId = genesis.Transactions[0].GetHash();
+                //    //uint256 txId2 = genesis.Transactions[1].GetHash();
+                //    //Coins coins = new Coins(genesis.Transactions[0], 0);
+                //    //Coins coins2 = new Coins(genesis.Transactions[1], 0);
+                //    //UnspentOutputs[] utxos = new UnspentOutputs[2];
+                //    //utxos[0] = new UnspentOutputs(txId, coins);
+                //    //utxos[1] = new UnspentOutputs(txId2, coins2);
 
-                    this.SaveChangesAsync(utxos, null, genesisChainedBlock.HashBlock, chained.HashBlock).Wait();
-                }
+                //    this.SaveChangesAsync(utxos, null, genesisChainedBlock.HashBlock, chained.HashBlock).Wait();
+                //}
                 //this.SaveChangesAsync(new UnspentOutputs[] { new UnspentOutputs(genesis.Transactions[0].GetHash(), new Coins(genesis.Transactions[0], 0)) }, null, genesisChainedBlock.HashBlock, chained.HashBlock).Wait();
                 //this.SaveChangesAsync(new UnspentOutputs[] { new UnspentOutputs(genesis.Transactions[1].GetHash(), new Coins(genesis.Transactions[1], 0)) }, null, genesisChainedBlock.HashBlock, chained.HashBlock).Wait();
                 //Assert.NotNull(ctx.PersistentCoinView.FetchCoinsAsync(new[] { genesis.Transactions[0].GetHash() }).Result.UnspentOutputs[0]);
